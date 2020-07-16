@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { withFirebase } from '../Firebase';
+import { AuthUserContext, withAuthorization } from '../Session'; 
 
 class AdminPage extends Component {
   constructor(props) {
@@ -38,15 +39,17 @@ class AdminPage extends Component {
 
   render() {
     const { users, loading } = this.state;
-
+    
     return (
-      <div>
-        <h1>Admin</h1>
+      <AuthUserContext.Consumer>
+        <div>
+          <h1>Admin</h1>
 
-        {loading && <div>Loading ...</div>}
+          {loading && <div>Loading ...</div>}
 
-        <UserList users={users} />
-      </div>
+          <UserList users={users} />
+        </div>
+      </AuthUserContext.Consumer>
     );
   }
 }
@@ -69,4 +72,6 @@ const UserList = ({ users }) => (
   </ul>
 );
 
-export default withFirebase(AdminPage);
+const condition = (authUser) => !!authUser;
+
+export default withAuthorization(condition)(withFirebase(AdminPage));

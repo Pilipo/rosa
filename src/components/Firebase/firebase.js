@@ -5,7 +5,7 @@ import apiKeys from '../../helpers/apiKeys';
 
 class Firebase {
   constructor() {
-    app.initializeApp(apiKeys.firebaseConfig);
+    app.initializeApp(apiKeys);
 
     this.auth = app.auth();
     this.db = app.database();
