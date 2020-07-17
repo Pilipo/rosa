@@ -29,9 +29,43 @@ class Firebase {
 
   users = () => this.db.ref('users');
 
+  // *** Recipe API ***
+
+  recipe = (uid) => this.db.ref(`recipes/${uid}`);
+  
+  recipes = () => this.db.ref('recipes');
+
+  ingredientsByRecipeId = (uid) => this.db.ref(`recipes/${uid}/ingredients`);
+
+  methodssByRecipeId = (uid) => this.db.ref(`recipes/${uid}/methods`);
+
   // *** Ingredient API ***
 
+  ingredient = (uid) => this.db.ref(`ingredients/${uid}`);
+  
   ingredients = () => this.db.ref('ingredients');
+
+  categoryByIngredientId = (uid) => this.db.ref(`ingredients/${uid}/category`);
+
+  // *** Method API ***
+
+  method = (uid) => this.db.ref(`methods/${uid}`);
+
+  methods = () => this.db.ref('methods');
+  
+  // *** Category API ***
+
+  category = (uid) => this.db.ref(`categories/${uid}`);
+
+  categories = () => this.db.ref('categories');
+
+  // *** IngredientEntry API ***
+
+  ingredientEntry = (uid) => this.db.ref(`ingredientEntries/${uid}`);
+
+  ingredientEntries = () => this.db.ref('ingredientEntries');
+
+  ingredientsByIngredientEntryId = (uid) => this.db.ref(`ingredientEntries/${uid}/ingredients`);
 
 }
 

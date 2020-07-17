@@ -8,12 +8,12 @@ import { AuthUserContext } from '../Session';
 
 const NavBar = () => (
   <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-    <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <Link to={ROUTES.LANDING} className="sidebar-brand d-flex align-items-center justify-content-center">
       <div className="sidebar-brand-icon rotate-n-15">
         <i className="fas fa-route"></i>
       </div>
       <div className="sidebar-brand-text text-capitalize mx-3">{process.env.REACT_APP_NAME}<span className="text-gray-500"> {process.env.REACT_APP_VERSION}</span></div>
-    </a>
+    </Link>
 
     <AuthUserContext.Consumer>
       {(authUser) => (authUser ? <NavBarAuth user={authUser} /> : <NavBarNonAuth />)}
@@ -30,7 +30,7 @@ const NavBarAuth = (props) => (
           <Gravatar className="img-profile rounded-circle" alt="" email={props.user.email} />
         </a>
         <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-          <Link className="dropdown-item" to={ROUTES.ING}><i className="fas fa-cog fa-sm fa-fw mr-2 text-gray-400"></i>Test</Link>
+          <Link className="dropdown-item" to={ROUTES.RECIPES}><i className="fas fa-cog fa-sm fa-fw mr-2 text-gray-400"></i>Recipe Test</Link>
           <Link className="dropdown-item" to={ROUTES.ACCOUNT}><i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>Profile</Link>
           <Link className="dropdown-item" to={ROUTES.ADMIN}><i className="fas fa-cog fa-sm fa-fw mr-2 text-gray-400"></i>Admin</Link>
           <div className="dropdown-divider"></div>

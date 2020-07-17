@@ -4,4 +4,5 @@ export const SIGN_IN = '/signin';
 export const ACCOUNT = '/account';
 export const ADMIN = '/admin';
 export const PASSWORD_FORGET = '/pw-forget';
-export const ING = '/ingredient';
+export const RECIPES = '/recipes';
+export const RECIPE = '/recipe/:uid';
