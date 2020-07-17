@@ -1,0 +1,17 @@
+{
+  "ingredient1": {
+    "name": "AP Flour",
+    "amount": 1,
+    "unit": "cup"
+  },
+  "ingredient2": {
+    "name": "Baking Powder",
+    "amount": 3,
+    "unit": "teaspoon"
+  },
+  "ingredient3": {
+    "name": "Unsalted Butter",
+    "amount": 0.5,
+    "unit": "cup"
+  }
+}

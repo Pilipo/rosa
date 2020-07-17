@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 
 import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Session'; 
+import categoryData from '../../helpers/categoryData';
 
 class RecipesPage extends Component {
   constructor(props) {
@@ -21,6 +22,8 @@ class RecipesPage extends Component {
 
   componentDidMount() {
     this.setState({ loading: true });
+    categoryData().then((data => console.log(data)))
+    console.log(categoryData);
   }
 
   render() {

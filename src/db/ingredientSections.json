@@ -1,0 +1,14 @@
+{
+  "ingredientSections1": {
+    "ingredientId": "ingredient1",
+    "sectionId": "section2"
+  },
+  "ingredientSections2": {
+    "ingredientId": "ingredient2",
+    "sectionId": "section2"
+  },
+  "ingredientSections3": {
+    "ingredientId": "ingredient3",
+    "sectionId": "section1"
+  }
+}
