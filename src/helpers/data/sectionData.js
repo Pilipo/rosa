@@ -1,5 +1,5 @@
 import axios from 'axios';
-import apiKeys from './apiKeys';
+import apiKeys from '../apiKeys';
 
 const baseUrl = apiKeys.databaseURL;
 
