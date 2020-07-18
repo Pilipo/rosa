@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { withFirebase } from '../Firebase';
-import { withAuthorization } from '../Session'; 
+import { withAuthorization } from '../Session';
 
 class IngredientPage extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class IngredientPage extends Component {
         }));
 
         this.setState({
-            ingredients: usersList,
+          ingredients: usersList,
           loading: false,
         });
       }
@@ -36,7 +36,6 @@ class IngredientPage extends Component {
   componentWillUnmount() {
     this.props.firebase.ingredients().off();
   }
-
 
   render() {
     const { ingredients, loading } = this.state;
