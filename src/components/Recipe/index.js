@@ -29,28 +29,29 @@ class RecipePage extends Component {
       recipeData.getRecipeById(uid),
       recipeData.getIngredientsByRecipeId(uid),
       recipeData.getMethodsByRecipeId(uid),
-    ])
-      .then((dataArray) => {
-        this.setState({ recipe: dataArray[0] });
+    ]).then((dataArray) => {
+      this.setState({ recipe: dataArray[0] });
 
-        const ingredients = dataArray[1].map((ingredientObj) => (ingredientData.getIngredientById(ingredientObj.ingredientId)));
+      const ingredients = dataArray[1].map((ingredientObj) => (ingredientData.getIngredientById(ingredientObj.ingredientId)));
 
-        Promise.all(ingredients).then((iData) => {
-          const ingredientsList = Object.keys(iData).map((key) => ({
-            ...iData[key].data,
-          }));
-          this.setState({ ingredients: ingredientsList });
-        });
-
-        const methods = dataArray[2].map((methodObj) => (methodData.getMethodById(methodObj.methodId)));
-
-        Promise.all(methods).then((iData) => {
-          const methodsList = Object.keys(iData).map((key) => ({
-            ...iData[key].data,
-          }));
-          this.setState({ methods: methodsList });
-        });
+      Promise.all(ingredients).then((iData) => {
+        const ingredientsList = Object.keys(iData).map((key) => ({
+          ...iData[key].data,
+          id: dataArray[1][key].ingredientId,
+        }));
+        this.setState({ ingredients: ingredientsList });
       });
+
+      const methods = dataArray[2].map((methodObj) => (methodData.getMethodById(methodObj.methodId)));
+
+      Promise.all(methods).then((iData) => {
+        const methodsList = Object.keys(iData).map((key) => ({
+          ...iData[key].data,
+          id: dataArray[2][key].methodId,
+        }));
+        this.setState({ methods: methodsList });
+      });
+    });
   }
 
   render() {
@@ -68,7 +69,7 @@ class RecipePage extends Component {
 const IngredientList = ({ ingredients }) => (
   <ul>
     {ingredients.map((ingredient) => (
-      <li>
+      <li key={ingredient.id}>
         <span>
           {ingredient.amount} {ingredient.unit} {ingredient.name}
         </span>
@@ -80,7 +81,7 @@ const IngredientList = ({ ingredients }) => (
 const MethodList = ({ methods }) => (
   <ol>
     {methods.map((method) => (
-      <li>
+      <li key={method.id}>
         {method.content}
       </li>
     ))}
