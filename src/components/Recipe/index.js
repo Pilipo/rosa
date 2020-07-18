@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
 
 import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Session';
 import recipeData from '../../helpers/data/recipeData';
 import ingredientData from '../../helpers/data/ingredientData';
 import methodData from '../../helpers/data/methodData';
-import ModalContainer from './modalContainer';
 
 class RecipePage extends Component {
   constructor(props) {
@@ -60,34 +60,65 @@ class RecipePage extends Component {
       <div>
         <h2>{this.state.recipe ? this.state.recipe.name : ''}</h2>
         <p>Yield: {this.state.recipe ? this.state.recipe.yield : ''}</p>
-        <IngredientList ingredients={this.state.ingredients} />
+        <IngredientList className="text-left" ingredients={this.state.ingredients} />
         <MethodList methods={this.state.methods} />
-        <ModalContainer />
       </div>
     );
   }
 }
 
-const IngredientList = ({ ingredients }) => (
-  <ul>
-    {ingredients.map((ingredient) => (
-      <li key={ingredient.id}>
-        <span>
-          {ingredient.amount} {ingredient.unit} {ingredient.name}
-        </span>
-      </li>
-    ))}
-  </ul>
-);
+const IngredientList = ({ ingredients }) => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  return (
+  <>
+    <h1 className="h4">
+      Ingredients
+      <Button variant="primary" size="sm" onClick={handleShow} className="ml-2 rounded-circle text-right"><i className="fas fa-plus"></i></Button>
+    </h1>
+    <ul>
+      {ingredients.map((ingredient) => (
+        <li key={ingredient.id}>
+          <span>
+            {ingredient.amount} {ingredient.unit} {ingredient.name}
+          </span>
+        </li>
+      ))}
+    </ul>
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">Modal heading</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={handleClose}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  </>
+  );
+};
 
 const MethodList = ({ methods }) => (
-  <ol>
-    {methods.map((method) => (
-      <li key={method.id}>
-        {method.content}
-      </li>
-    ))}
-  </ol>
+  <>
+    <h1 className="h4">
+      Methods
+      <Button variant="primary" size="sm" className="ml-2 rounded-circle text-right"><i className="fas fa-plus"></i></Button>
+    </h1>
+
+    <ol>
+      {methods.map((method) => (
+        <li key={method.id}>
+          {method.content}
+        </li>
+      ))}
+    </ol>
+  </>
 );
 
 const condition = (authUser) => !!authUser;
