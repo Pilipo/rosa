@@ -5,6 +5,7 @@ import { withAuthorization } from '../Session';
 import recipeData from '../../helpers/data/recipeData';
 import ingredientData from '../../helpers/data/ingredientData';
 import methodData from '../../helpers/data/methodData';
+import ModalContainer from './modalContainer';
 
 class RecipePage extends Component {
   constructor(props) {
@@ -61,6 +62,7 @@ class RecipePage extends Component {
         <p>Yield: {this.state.recipe ? this.state.recipe.yield : ''}</p>
         <IngredientList ingredients={this.state.ingredients} />
         <MethodList methods={this.state.methods} />
+        <ModalContainer />
       </div>
     );
   }
