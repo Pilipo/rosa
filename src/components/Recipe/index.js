@@ -1,61 +1,92 @@
-// an index of all the recipes.
-// needs imput field for creating new recipes
-// eventually searchable
-
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Session';
 import recipeData from '../../helpers/data/recipeData';
+import ingredientData from '../../helpers/data/ingredientData';
+import methodData from '../../helpers/data/methodData';
 
-class RecipesPage extends Component {
+class RecipePage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       loading: false,
-      recipes: [],
-      currentRecipeId: null,
+      recipe: {},
+      ingredients: [],
+      methods: [],
     };
   }
 
   componentDidMount() {
     this.setState({ loading: true });
-    recipeData.getRecipes().then((data) => {
-      this.setState({
-        recipes: data,
+
+    const {
+      params: { uid },
+    } = this.props.match;
+
+    Promise.all([
+      recipeData.getRecipeById(uid),
+      recipeData.getIngredientsByRecipeId(uid),
+      recipeData.getMethodsByRecipeId(uid),
+    ])
+      .then((dataArray) => {
+        this.setState({ recipe: dataArray[0] });
+
+        const ingredients = dataArray[1].map((ingredientObj) => (ingredientData.getIngredientById(ingredientObj.ingredientId)));
+
+        Promise.all(ingredients).then((iData) => {
+          const ingredientsList = Object.keys(iData).map((key) => ({
+            ...iData[key].data,
+          }));
+          this.setState({ ingredients: ingredientsList });
+        });
+
+        const methods = dataArray[2].map((methodObj) => (methodData.getMethodById(methodObj.methodId)));
+
+        Promise.all(methods).then((iData) => {
+          const methodsList = Object.keys(iData).map((key) => ({
+            ...iData[key].data,
+          }));
+          this.setState({ methods: methodsList });
+        });
       });
-    });
   }
 
   render() {
-    const { recipes, loading } = this.state;
     return (
-        <div>
-          <h1>Recipes</h1>
-
-          {loading && <div>Loading ...</div>}
-
-          {recipes && <RecipeList recipes={recipes} />}
-        </div>
+      <div>
+        <h2>{this.state.recipe ? this.state.recipe.name : ''}</h2>
+        <p>Yield: {this.state.recipe ? this.state.recipe.yield : ''}</p>
+        <IngredientList ingredients={this.state.ingredients} />
+        <MethodList methods={this.state.methods} />
+      </div>
     );
   }
 }
 
-const RecipeList = ({ recipes }) => (
+const IngredientList = ({ ingredients }) => (
   <ul>
-    {recipes.map((recipe) => (
-      <li key={recipe.uid}>
+    {ingredients.map((ingredient) => (
+      <li>
         <span>
-          <strong>Name: </strong> {recipe.name}
+          {ingredient.amount} {ingredient.unit} {ingredient.name}
         </span>
-        <Link to={`/recipe/${recipe.uid}`}> (Link)</Link>
       </li>
     ))}
   </ul>
 );
 
+const MethodList = ({ methods }) => (
+  <ol>
+    {methods.map((method) => (
+      <li>
+        {method.content}
+      </li>
+    ))}
+  </ol>
+);
+
 const condition = (authUser) => !!authUser;
 
-export default withAuthorization(condition)(withFirebase(RecipesPage));
+export default withAuthorization(condition)(withFirebase(RecipePage));

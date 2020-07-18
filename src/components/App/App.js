@@ -5,6 +5,7 @@ import { withAuthentication } from '../Session';
 import LandingPage from '../Landing';
 import SignUpPage from '../SignUp';
 import SignInPage from '../SignIn';
+import RecipesPage from '../Recipes';
 import RecipePage from '../Recipe';
 import PasswordForgetPage from '../PasswordForget';
 import AccountPage from '../Account';
@@ -24,7 +25,8 @@ const App = () => (
             <Route exact path={ROUTES.LANDING} component={LandingPage} />
             <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
             <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-            <Route path={ROUTES.RECIPES} component={RecipePage} />
+            <Route path={ROUTES.RECIPES} component={RecipesPage} />
+            <Route path={ROUTES.RECIPE} component={RecipePage} />
             <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
             <Route path={ROUTES.ACCOUNT} component={AccountPage} />
             <Route path={ROUTES.ADMIN} component={AdminPage} />

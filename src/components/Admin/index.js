@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { withFirebase } from '../Firebase';
-import { withAuthorization } from '../Session'; 
+import { withAuthorization } from '../Session';
 
 class AdminPage extends Component {
   constructor(props) {
@@ -39,7 +39,7 @@ class AdminPage extends Component {
 
   render() {
     const { users, loading } = this.state;
-    
+
     return (
         <div>
           <h1>Admin</h1>
