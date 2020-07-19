@@ -88,15 +88,15 @@ const IngredientList = ({ ingredients }) => {
     </ul>
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Modal heading</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Add Ingredient</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+      <Modal.Body>Input field here.</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          Close
+          Cancel
         </Button>
         <Button variant="primary" onClick={handleClose}>
-          Save Changes
+          Save
         </Button>
       </Modal.Footer>
     </Modal>
@@ -104,11 +104,17 @@ const IngredientList = ({ ingredients }) => {
   );
 };
 
-const MethodList = ({ methods }) => (
+const MethodList = ({ methods }) => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  return (
+
   <>
     <h1 className="h4">
       Methods
-      <Button variant="primary" size="sm" className="ml-2 rounded-circle text-right"><i className="fas fa-plus"></i></Button>
+      <Button onClick={handleShow} variant="primary" size="sm" className="ml-2 rounded-circle text-right"><i className="fas fa-plus"></i></Button>
     </h1>
 
     <ol>
@@ -118,8 +124,24 @@ const MethodList = ({ methods }) => (
         </li>
       ))}
     </ol>
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">Add Method</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>Input field here.</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Cancel
+        </Button>
+        <Button variant="primary" onClick={handleClose}>
+          Save
+        </Button>
+      </Modal.Footer>
+    </Modal>
+
   </>
-);
+  );
+};
 
 const condition = (authUser) => !!authUser;
 
