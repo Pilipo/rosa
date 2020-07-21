@@ -59,7 +59,7 @@ class RecipePage extends Component {
     return (
       <div>
         <h2>{this.state.recipe ? this.state.recipe.name : ''}</h2>
-        <p>Yield: {this.state.recipe ? this.state.recipe.yield : ''}</p>
+        <p>Yield: {this.state.recipe ? this.state.recipe.servings : ''}</p>
         <IngredientList className="text-left" ingredients={this.state.ingredients} />
         <MethodList methods={this.state.methods} />
       </div>

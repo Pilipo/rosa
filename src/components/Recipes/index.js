@@ -9,6 +9,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Session';
 import recipeData from '../../helpers/data/recipeData';
+import RecipeTitleForm from '../Recipe/RecipeForm';
 
 class RecipesPage extends Component {
   constructor(props) {
@@ -52,15 +53,7 @@ class RecipesPage extends Component {
             <Modal.Header closeButton>
               <Modal.Title id="contained-modal-title-vcenter">Add Recipe</Modal.Title>
             </Modal.Header>
-            <Modal.Body>This should be replaced with an input field.</Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Cancel
-              </Button>
-              <Button variant="primary" onClick={handleClose}>
-                Continue...
-              </Button>
-            </Modal.Footer>
+            <Modal.Body><RecipeTitleForm /></Modal.Body>
           </Modal>
 
         </div>

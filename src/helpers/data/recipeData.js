@@ -4,6 +4,8 @@ import utils from '../utils';
 
 const baseUrl = apiKeys.databaseURL;
 
+// *** Get ***
+
 const getRecipes = () => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/recipes.json`)
     .then(({ data }) => resolve(utils.convertFirebaseCollection(data)))
@@ -24,9 +26,16 @@ const getIngredientsByRecipeId = (uid) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
+// *** Add ***
+
+const addRecipe = (newRecipeObj) => new Promise((resolve, reject) => {
+  axios.post(`${baseUrl}/recipes.json`, newRecipeObj);
+});
+
 export default {
   getRecipes,
   getRecipeById,
   getMethodsByRecipeId,
   getIngredientsByRecipeId,
+  addRecipe,
 };
