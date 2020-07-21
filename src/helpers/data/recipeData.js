@@ -29,7 +29,8 @@ const getIngredientsByRecipeId = (uid) => new Promise((resolve, reject) => {
 // *** Add ***
 
 const addRecipe = (newRecipeObj) => new Promise((resolve, reject) => {
-  axios.post(`${baseUrl}/recipes.json`, newRecipeObj);
+  axios.post(`${baseUrl}/recipes.json`, newRecipeObj)
+    .then((data) => resolve(data.data));
 });
 
 export default {

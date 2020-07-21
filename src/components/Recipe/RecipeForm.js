@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import recipeDataHelper from '../../helpers/data/recipeData';
-
-function RecipeTitleForm() {
-  return (
-    <RecipeTitleFormBase />
-  );
-}
 
 const INITIAL_STATE = {
   name: '',
@@ -14,7 +9,7 @@ const INITIAL_STATE = {
   error: null,
 };
 
-class RecipeTitleFormBase extends Component {
+class RecipeTitleForm extends Component {
   constructor(props) {
     super(props);
 
@@ -27,12 +22,11 @@ class RecipeTitleFormBase extends Component {
     if (name === '' || servings === '') {
       return;
     }
-
     recipeDataHelper
       .addRecipe({ name, servings })
       .then((data) => {
-        this.setState({ name, servings }); // put data in state
-        // load ingredient modal
+        this.setState({ name, servings });
+        this.props.history.push(`/recipe/${data.name}`);
       })
       .catch((err) => this.setState({ err }));
 
@@ -92,4 +86,4 @@ class RecipeTitleFormBase extends Component {
   }
 }
 
-export default RecipeTitleForm;
+export default withRouter(RecipeTitleForm);
