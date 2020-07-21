@@ -11,7 +11,14 @@ const getIngredients = () => new Promise((resolve, reject) => {
 
 const getIngredientById = (uid) => axios.get(`${baseUrl}/ingredients/${uid}.json`);
 
+// *** Add ***
+
+const addIngredient = (newIngredientObj) => new Promise((resolve, reject) => {
+  axios.post(`${baseUrl}/ingredients.json`, newIngredientObj);
+});
+
 export default {
   getIngredients,
   getIngredientById,
+  addIngredient,
 };

@@ -6,6 +6,7 @@ import { withAuthorization } from '../Session';
 import recipeData from '../../helpers/data/recipeData';
 import ingredientData from '../../helpers/data/ingredientData';
 import methodData from '../../helpers/data/methodData';
+import IngredientForm from './IngredientForm';
 
 class RecipePage extends Component {
   constructor(props) {
@@ -90,15 +91,7 @@ const IngredientList = ({ ingredients }) => {
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">Add Ingredient</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Input field here.</Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Cancel
-        </Button>
-        <Button variant="primary" onClick={handleClose}>
-          Save
-        </Button>
-      </Modal.Footer>
+      <Modal.Body><IngredientForm /></Modal.Body>
     </Modal>
   </>
   );
