@@ -7,6 +7,7 @@ import recipeData from '../../helpers/data/recipeData';
 import ingredientData from '../../helpers/data/ingredientData';
 import methodData from '../../helpers/data/methodData';
 import IngredientForm from './IngredientForm';
+import MethodForm from './MethodForm';
 
 class RecipePage extends Component {
   constructor(props) {
@@ -121,15 +122,7 @@ const MethodList = ({ methods }) => {
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">Add Method</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Input field here.</Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Cancel
-        </Button>
-        <Button variant="primary" onClick={handleClose}>
-          Save
-        </Button>
-      </Modal.Footer>
+      <Modal.Body><MethodForm /></Modal.Body>
     </Modal>
 
   </>

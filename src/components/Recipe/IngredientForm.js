@@ -33,7 +33,6 @@ class IngredientFormBase extends Component {
       .addIngredient({ name, amount, unit })
       .then((data) => {
         this.setState({ name, amount, unit }); // put data in state
-        console.log(data);
         // load ingredient modal
       })
       .catch((err) => this.setState({ err }));

@@ -11,7 +11,14 @@ const getMethods = () => new Promise((resolve, reject) => {
 
 const getMethodById = (uid) => axios.get(`${baseUrl}/methods/${uid}.json`);
 
+// *** Add ***
+
+const addMethod = (newMethodObj) => new Promise((resolve, reject) => {
+  axios.post(`${baseUrl}/methods.json`, newMethodObj);
+});
+
 export default {
   getMethods,
   getMethodById,
+  addMethod,
 };
