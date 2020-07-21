@@ -19,11 +19,25 @@ class RecipePage extends Component {
       ingredients: [],
       methods: [],
     };
+
+    this.addIngredient = this.addIngredient.bind(this);
+  }
+
+  addIngredient(ingredientObj) {
+    this.setState({
+      ingredients: [...this.state.ingredients, ingredientObj],
+    });
+  }
+
+  addMethod(methodObj) {
+    const { methods } = this.state;
+    methods.push(methodObj);
+    this.setState({ methods });
   }
 
   componentDidMount() {
     this.setState({ loading: true });
-
+    // get uid from Route
     const {
       params: { uid },
     } = this.props.match;
@@ -33,6 +47,8 @@ class RecipePage extends Component {
       recipeData.getIngredientsByRecipeId(uid),
       recipeData.getMethodsByRecipeId(uid),
     ]).then((dataArray) => {
+      // eslint-disable-next-line no-param-reassign
+      dataArray[0].id = uid;
       this.setState({ recipe: dataArray[0] });
 
       const ingredients = dataArray[1].map((ingredientObj) => (ingredientData.getIngredientById(ingredientObj.ingredientId)));
@@ -62,17 +78,22 @@ class RecipePage extends Component {
       <div>
         <h2>{this.state.recipe ? this.state.recipe.name : ''}</h2>
         <p>Yield: {this.state.recipe ? this.state.recipe.servings : ''}</p>
-        <IngredientList className="text-left" ingredients={this.state.ingredients} />
+        <IngredientList className="text-left"
+          ingredients={this.state.ingredients}
+          recipeObj={this.state.recipe}
+          addIngredient={this.addIngredient}
+        />
         <MethodList methods={this.state.methods} />
       </div>
     );
   }
 }
 
-const IngredientList = ({ ingredients }) => {
+const IngredientList = ({ ingredients, recipeObj, addIngredient }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
   return (
   <>
     <h1 className="h4">
@@ -92,7 +113,13 @@ const IngredientList = ({ ingredients }) => {
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">Add Ingredient</Modal.Title>
       </Modal.Header>
-      <Modal.Body><IngredientForm handler={handleClose} /></Modal.Body>
+      <Modal.Body>
+        <IngredientForm
+          handler={handleClose}
+          recipeId={recipeObj.id}
+          addIngredient={addIngredient}
+        />
+      </Modal.Body>
     </Modal>
   </>
   );

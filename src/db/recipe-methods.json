@@ -1,13 +1,13 @@
 {
-  "recipeMethod1": {
+  "recipe-method1": {
     "recipeId": "recipe1",
     "methodId": "method1"
   },
-  "recipeMethod2": {
+  "recipe-method2": {
     "recipeId": "recipe1",
     "methodId": "method2"
   },
-  "recipeMethod3": {
+  "recipe-method3": {
     "recipeId": "recipe1",
     "methodId": "method3"
   }

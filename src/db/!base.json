@@ -3,7 +3,7 @@
   "sections": "null",
   "methods": "null",
   "recipes": "null",
-  "recipeIngredients": "null",
-  "recipeMethods": "null",
-  "ingredientSections": "null"
+  "recipe-ingredient": "null",
+  "recipe-method": "null",
+  "ingredient-section": "null"
 }

@@ -13,8 +13,10 @@ const getIngredientById = (uid) => axios.get(`${baseUrl}/ingredients/${uid}.json
 
 // *** Add ***
 
-const addIngredient = (newIngredientObj) => new Promise((resolve, reject) => {
-  axios.post(`${baseUrl}/ingredients.json`, newIngredientObj);
+const addIngredient = (newIngredientObj, recipeId) => new Promise((resolve, reject) => {
+  axios.post(`${baseUrl}/ingredients.json`, newIngredientObj)
+    .then(({ data }) => resolve(data))
+    .catch((err) => reject(err));
 });
 
 export default {

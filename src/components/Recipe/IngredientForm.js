@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import ingredientDataHelper from '../../helpers/data/ingredientData';
+import relationshipHelper from '../../helpers/data/relationshipData';
 
 const INITIAL_STATE = {
   name: '',
@@ -13,8 +14,10 @@ const INITIAL_STATE = {
 class IngredientForm extends Component {
   constructor(props) {
     super(props);
-
-    this.state = { ...INITIAL_STATE };
+    this.state = {
+      ...INITIAL_STATE,
+      recipeId: props.recipeId,
+    };
     this.nameInput = React.createRef();
   }
 
@@ -36,8 +39,7 @@ class IngredientForm extends Component {
 
     if (event.keyCode === 13 && event.ctrlKey) {
       // ctrl + enter
-      this.onSubmit(event);
-      this.props.handler();
+      this.onSubmit(event, true);
     } else if (event.keyCode === 13) {
       // just enter
       this.onSubmit(event);
@@ -50,7 +52,7 @@ class IngredientForm extends Component {
     }
   }
 
-  onSubmit = (event) => {
+  onSubmit = (event, closeAfter = false) => {
     const { name, amount, unit } = this.state;
 
     if (name === '' || amount === '' || unit === '') {
@@ -61,10 +63,25 @@ class IngredientForm extends Component {
       .addIngredient({ name, amount, unit })
       .then((data) => {
         this.setState({ name, amount, unit });
+        relationshipHelper.addRelationship({
+          name: 'recipe',
+          id: this.state.recipeId,
+        },
+        {
+          name: 'ingredient',
+          id: data.name,
+        });
+        this.props.addIngredient({
+          name,
+          amount,
+          unit,
+          id: data.name,
+        });
       })
+      .then(() => closeAfter && this.props.handler())
       .catch((err) => this.setState({ err }));
 
-    event.preventDefault();
+    event.preventDefault && event.preventDefault();
   };
 
   onChange = (event) => {
@@ -123,7 +140,7 @@ class IngredientForm extends Component {
             </button>
           </div>
           <div className="col-4">
-            <button onClick={this.props.handler} disabled={isInvalid} className="btn btn-primary btn-user btn-block" type="submit">
+            <button onClick={ () => this.handleKeyDown({ keyCode: 13, ctrlKey: true })} disabled={isInvalid} className="btn btn-primary btn-user btn-block" type="reset">
               <div>Save and Close</div>
               <div className="text-gray-300 font-italic">(ctrl + enter)</div>
             </button>

@@ -1,0 +1,83 @@
+{
+  "ingredients": {
+    "ingredient1": {
+      "name": "AP Flour",
+      "amount": 1,
+      "unit": "cup"
+    },
+    "ingredient2": {
+      "name": "Baking Powder",
+      "amount": 3,
+      "unit": "teaspoon"
+    },
+    "ingredient3": {
+      "name": "Unsalted Butter",
+      "amount": 0.5,
+      "unit": "cup"
+    }
+  },
+  "sections": {
+    "section1": {
+      "name": "Dairy"
+    },
+    "section2": {
+      "name": "Baking"
+    }
+  },
+  "methods": {
+    "section1": {
+      "name": "Dairy"
+    },
+    "section2": {
+      "name": "Baking"
+    }
+  },
+  "recipes": {
+    "recipe1": {
+      "name": "Biscuits",
+      "servings": "12 biscuits"
+    }
+  },
+  "recipe-ingredient": {
+    "recipe-ingredient1": {
+      "recipeId": "recipe1",
+      "ingredientId": "ingredient1"
+    },
+    "recipe-ingredient2": {
+      "recipeId": "recipe1",
+      "ingredientId": "ingredient2"
+    },
+    "recipe-ingredient3": {
+      "recipeId": "recipe1",
+      "ingredientId": "ingredient3"
+    }
+  },
+  "recipe-method": {
+    "recipe-method1": {
+      "recipeId": "recipe1",
+      "methodId": "method1"
+    },
+    "recipe-method2": {
+      "recipeId": "recipe1",
+      "methodId": "method2"
+    },
+    "recipe-method3": {
+      "recipeId": "recipe1",
+      "methodId": "method3"
+    }
+  },
+  "ingredient-section": {
+    "ingredient-section1": {
+      "ingredientId": "ingredient1",
+      "sectionId": "section2"
+    },
+    "ingredient-section2": {
+      "ingredientId": "ingredient2",
+      "sectionId": "section2"
+    },
+    "ingredient-section3": {
+      "ingredientId": "ingredient3",
+      "sectionId": "section1"
+    }
+  }
+}

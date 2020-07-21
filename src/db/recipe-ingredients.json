@@ -1,13 +1,13 @@
 {
-  "recipeIngredient1": {
+  "recipe-ingredient1": {
     "recipeId": "recipe1",
     "ingredientId": "ingredient1"
   },
-  "recipeIngredient2": {
+  "recipe-ingredient2": {
     "recipeId": "recipe1",
     "ingredientId": "ingredient2"
   },
-  "recipeIngredient3": {
+  "recipe-ingredient3": {
     "recipeId": "recipe1",
     "ingredientId": "ingredient3"
   }

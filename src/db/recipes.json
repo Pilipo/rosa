@@ -1,6 +1,6 @@
 {
   "recipe1": {
     "name": "Biscuits",
-    "yield": "12 biscuits"
+    "servings": "12 biscuits"
   }
 }
