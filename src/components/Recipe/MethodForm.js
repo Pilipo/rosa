@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import methodDataHelper from '../../helpers/data/methodData';
-
-function MethodForm() {
-  return (
-    <MethodFormBase />
-  );
-}
 
 const INITIAL_STATE = {
   content: '',
   error: null,
 };
 
-class MethodFormBase extends Component {
+class MethodForm extends Component {
   constructor(props) {
     super(props);
 
@@ -62,9 +57,9 @@ class MethodFormBase extends Component {
         </div>
         <div className="row">
         <div className="col-4">
-            <a href="/recipes" className="btn btn-secondary btn-user btn-block">
+            <button onClick={this.props.handler} className="btn btn-secondary btn-user btn-block" type="reset">
               Cancel
-            </a>
+            </button>
           </div>
           <div className="col-4">
             <button disabled={isInvalid} className="btn btn-primary btn-user btn-block" type="submit">
@@ -83,4 +78,4 @@ class MethodFormBase extends Component {
   }
 }
 
-export default MethodForm;
+export default withRouter(MethodForm);

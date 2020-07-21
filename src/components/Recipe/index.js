@@ -122,7 +122,7 @@ const MethodList = ({ methods }) => {
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">Add Method</Modal.Title>
       </Modal.Header>
-      <Modal.Body><MethodForm /></Modal.Body>
+      <Modal.Body><MethodForm handler={handleClose} /></Modal.Body>
     </Modal>
 
   </>
