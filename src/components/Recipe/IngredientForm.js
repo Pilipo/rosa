@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import ingredientDataHelper from '../../helpers/data/ingredientData';
-
-function IngredientForm() {
-  return (
-    <IngredientFormBase />
-  );
-}
 
 const INITIAL_STATE = {
   name: '',
@@ -15,7 +10,7 @@ const INITIAL_STATE = {
   error: null,
 };
 
-class IngredientFormBase extends Component {
+class IngredientForm extends Component {
   constructor(props) {
     super(props);
 
@@ -32,8 +27,7 @@ class IngredientFormBase extends Component {
     ingredientDataHelper
       .addIngredient({ name, amount, unit })
       .then((data) => {
-        this.setState({ name, amount, unit }); // put data in state
-        // load ingredient modal
+        this.setState({ name, amount, unit });
       })
       .catch((err) => this.setState({ err }));
 
@@ -89,9 +83,9 @@ class IngredientFormBase extends Component {
         </div>
         <div className="row">
         <div className="col-4">
-            <a href="/recipes" className="btn btn-secondary btn-user btn-block">
+            <button onClick={this.props.handler} className="btn btn-secondary btn-user btn-block" type="reset">
               Cancel
-            </a>
+            </button>
           </div>
           <div className="col-4">
             <button disabled={isInvalid} className="btn btn-primary btn-user btn-block" type="submit">
@@ -110,4 +104,4 @@ class IngredientFormBase extends Component {
   }
 }
 
-export default IngredientForm;
+export default withRouter(IngredientForm);

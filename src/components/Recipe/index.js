@@ -92,7 +92,7 @@ const IngredientList = ({ ingredients }) => {
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">Add Ingredient</Modal.Title>
       </Modal.Header>
-      <Modal.Body><IngredientForm /></Modal.Body>
+      <Modal.Body><IngredientForm handler={handleClose} /></Modal.Body>
     </Modal>
   </>
   );
