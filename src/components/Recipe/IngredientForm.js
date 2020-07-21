@@ -15,6 +15,39 @@ class IngredientForm extends Component {
     super(props);
 
     this.state = { ...INITIAL_STATE };
+    this.nameInput = React.createRef();
+  }
+
+  componentDidMount = () => {
+    document.addEventListener('keydown', this.handleKeyDown, false);
+    setTimeout(() => this.nameInput.current.focus(), 1);
+  }
+
+  componentWillUnmount = () => {
+    document.removeEventListener('keydown', this.handleKeyDown, false);
+  }
+
+  handleKeyDown = (event) => {
+    const { name, amount, unit } = this.state;
+
+    if (name === '' || amount === '' || unit === '') {
+      return;
+    }
+
+    if (event.keyCode === 13 && event.ctrlKey) {
+      // ctrl + enter
+      this.onSubmit(event);
+      this.props.handler();
+    } else if (event.keyCode === 13) {
+      // just enter
+      this.onSubmit(event);
+      this.setState({
+        name: '',
+        amount: '',
+        unit: '',
+      });
+      this.nameInput.current.focus();
+    }
   }
 
   onSubmit = (event) => {
@@ -49,6 +82,7 @@ class IngredientForm extends Component {
       <form className="user" onSubmit={this.onSubmit}>
         <div className="form-group">
           <input
+            ref={this.nameInput}
             className="form-control form-control-user"
             id="inputIngredientName"
             name="name"
@@ -84,17 +118,20 @@ class IngredientForm extends Component {
         <div className="row">
         <div className="col-4">
             <button onClick={this.props.handler} className="btn btn-secondary btn-user btn-block" type="reset">
-              Cancel
+              <div>Cancel</div>
+              <div className="text-gray-300 font-italic">(esc)</div>
+            </button>
+          </div>
+          <div className="col-4">
+            <button onClick={this.props.handler} disabled={isInvalid} className="btn btn-primary btn-user btn-block" type="submit">
+              <div>Save and Close</div>
+              <div className="text-gray-300 font-italic">(ctrl + enter)</div>
             </button>
           </div>
           <div className="col-4">
             <button disabled={isInvalid} className="btn btn-primary btn-user btn-block" type="submit">
-              Save and Close
-            </button>
-          </div>
-          <div className="col-4">
-            <button disabled={isInvalid} className="btn btn-primary btn-user btn-block" type="submit">
-              Another...
+              <div>Another...</div>
+              <div className="text-gray-300 font-italic">(enter)</div>
             </button>
           </div>
         </div>
