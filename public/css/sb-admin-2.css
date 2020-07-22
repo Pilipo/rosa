@@ -2961,6 +2961,14 @@ fieldset:disabled a.btn {
   border-radius: 0.2rem;
 }
 
+.btn-xs, .btn-group-xs > .btn {
+  height: 1.5rem !important;
+  width: 1.5rem !important;
+  line-height: 0.4 !important;
+  padding: 0 !important;
+}
+}
+
 .btn-block {
   display: block;
   width: 100%;

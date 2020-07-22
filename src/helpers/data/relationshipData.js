@@ -3,6 +3,10 @@ import apiKeys from '../apiKeys';
 
 const baseUrl = apiKeys.databaseURL;
 
+const getRelationshipId = (parentType, childType, childId) => {
+  return axios.get(`${baseUrl}/${parentType}-${childType}.json?orderBy="${childType}Id"&equalTo="${childId}"&limitToFirst=1`);
+};
+
 // parent and child obj like thus: {name: 'recipe', id: '-MKi395hh6h9t94'}
 const addRelationship = (parentObj, childObj) => {
   const newRecord = {
@@ -12,4 +16,16 @@ const addRelationship = (parentObj, childObj) => {
   axios.post(`${baseUrl}/${parentObj.name}-${childObj.name}.json`, newRecord);
 };
 
-export default { addRelationship };
+const deleteRelationship = (parentType, childType, childId) => {
+  getRelationshipId(parentType, childType, childId)
+    .then((data) => {
+      const relId = Object.keys(data.data)[0];
+      axios.delete(`${baseUrl}/${parentType}-${childType}/${relId}.json`);
+    });
+};
+
+export default {
+  addRelationship,
+  deleteRelationship,
+  getRelationshipId,
+};

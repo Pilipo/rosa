@@ -8,6 +8,7 @@ import ingredientData from '../../helpers/data/ingredientData';
 import methodData from '../../helpers/data/methodData';
 import IngredientForm from './IngredientForm';
 import MethodForm from './MethodForm';
+import relationshipData from '../../helpers/data/relationshipData';
 
 class RecipePage extends Component {
   constructor(props) {
@@ -21,12 +22,20 @@ class RecipePage extends Component {
     };
 
     this.addIngredient = this.addIngredient.bind(this);
+    this.deleteIngredient = this.deleteIngredient.bind(this);
   }
 
   addIngredient(ingredientObj) {
     this.setState({
       ingredients: [...this.state.ingredients, ingredientObj],
     });
+  }
+
+  deleteIngredient(ingredientId) {
+    const filteredIngredients = this.state.ingredients.filter((item) => item.id !== ingredientId);
+    this.setState({ ingredients: filteredIngredients });
+    ingredientData.deleteIngredient(ingredientId);
+    relationshipData.deleteRelationship('recipe', 'ingredient', ingredientId);
   }
 
   addMethod(methodObj) {
@@ -82,6 +91,7 @@ class RecipePage extends Component {
           ingredients={this.state.ingredients}
           recipeObj={this.state.recipe}
           addIngredient={this.addIngredient}
+          deleteIngredient={this.deleteIngredient}
         />
         <MethodList methods={this.state.methods} />
       </div>
@@ -89,7 +99,12 @@ class RecipePage extends Component {
   }
 }
 
-const IngredientList = ({ ingredients, recipeObj, addIngredient }) => {
+const IngredientList = ({
+  ingredients,
+  recipeObj,
+  addIngredient,
+  deleteIngredient,
+}) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -105,7 +120,7 @@ const IngredientList = ({ ingredients, recipeObj, addIngredient }) => {
         <li key={ingredient.id}>
           <span>
             {ingredient.amount} {ingredient.unit} {ingredient.name}
-          </span>
+            <button onClick={() => deleteIngredient(ingredient.id)} className="btn btn-xs btn-primary ml-2 btn-circle rounded-circle"><i className="fas fa-times"></i></button>          </span>
         </li>
       ))}
     </ul>
