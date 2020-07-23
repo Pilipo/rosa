@@ -11,12 +11,12 @@ import PasswordForgetPage from '../PasswordForget';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import * as ROUTES from '../../constants/routes';
-import './App.css';
+import Toaster from '../Toaster';
 import Footer from '../Footer';
 import NavBar from '../NavBar';
 
 const App = () => (
-      <div id="wrapper" className="App">
+      <div id="wrapper" className="App vh-100">
         <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
           <Router>
@@ -33,6 +33,7 @@ const App = () => (
             </div>
           </Router>
         </div>
+        <Toaster />
         <Footer />
       </div>
     </div>
