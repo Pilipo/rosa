@@ -11,11 +11,12 @@ import PasswordForgetPage from '../PasswordForget';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import * as ROUTES from '../../constants/routes';
-import Toaster from '../Toaster';
 import Footer from '../Footer';
 import NavBar from '../NavBar';
 
-const App = () => (
+const App = (props) => {
+  // console.log('app props', props);
+  return (
       <div id="wrapper" className="App vh-100">
         <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
@@ -33,10 +34,10 @@ const App = () => (
             </div>
           </Router>
         </div>
-        <Toaster />
         <Footer />
       </div>
     </div>
-);
+  );
+};
 
 export default withAuthentication(App);

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import recipeDataHelper from '../../helpers/data/recipeData';
+import { withToast } from '../Toast';
 
 const INITIAL_STATE = {
   name: '',
@@ -27,6 +28,7 @@ class RecipeTitleForm extends Component {
       .then((data) => {
         this.setState({ name, servings });
         this.props.history.push(`/recipe/${data.name}`);
+        this.props.toast.makeToast('Recipe created. Let\'s add ingredients and methods!');
       })
       .catch((err) => this.setState({ err }));
 
@@ -86,4 +88,4 @@ class RecipeTitleForm extends Component {
   }
 }
 
-export default withRouter(RecipeTitleForm);
+export default withRouter(withToast(RecipeTitleForm));
