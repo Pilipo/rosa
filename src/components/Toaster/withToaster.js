@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Toast } from 'react-bootstrap';
 
 import { withToast } from '../Toast';
@@ -65,7 +65,7 @@ const withToaster = (Component) => {
         const { show } = this.state;
         // const handleClose = () => setShow(false);
         // const handleShow = () => setShow(true);
-        console.log('toast found', this.state.toast);
+        // console.log('toast found', this.state.toast);
         return (
           <>
             <div className="toast-container" tabIndex={-1}>
