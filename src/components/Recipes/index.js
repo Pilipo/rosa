@@ -64,7 +64,7 @@ class RecipesPage extends Component {
 const RecipeList = ({ recipes }) => (
   <div className="list-group list-group-flush">
     {recipes.map((recipe) => (
-        <Link className="list-group-item list-group-item-action" to={`/recipe/${recipe.id}`}>{recipe.name} </Link>
+        <Link key={recipe.id} className="list-group-item list-group-item-action" to={`/recipe/${recipe.id}`}>{recipe.name} </Link>
     ))}
   </div>
 );

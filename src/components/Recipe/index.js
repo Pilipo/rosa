@@ -10,6 +10,8 @@ import IngredientForm from './IngredientForm';
 import MethodForm from './MethodForm';
 import relationshipData from '../../helpers/data/relationshipData';
 
+import './recipe.scss';
+
 class RecipePage extends Component {
   constructor(props) {
     super(props);
@@ -84,7 +86,8 @@ class RecipePage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="row">
+      <div className="col text-center">
         <h2>{this.state.recipe ? this.state.recipe.name : ''}</h2>
         <p>Yield: {this.state.recipe ? this.state.recipe.servings : ''}</p>
         <IngredientList className="text-left"
@@ -99,6 +102,7 @@ class RecipePage extends Component {
           addMethod={this.addMethod}
           deleteMethod={this.deleteMethod}
         />
+      </div>
       </div>
     );
   }
@@ -118,14 +122,14 @@ const IngredientList = ({
   <>
     <h1 className="h4">
       Ingredients
-      <Button variant="primary" size="sm" onClick={handleShow} className="ml-2 rounded-circle text-right"><i className="fas fa-plus"></i></Button>
+      <Button variant="primary" size="sm" onClick={handleShow} className="ml-2">Add</Button>
     </h1>
-    <ul>
+    <ul className="list-unstyled">
       {ingredients.map((ingredient) => (
         <li key={ingredient.id}>
           <span>
-            {ingredient.amount} {ingredient.unit} {ingredient.name}
-            <button onClick={() => deleteIngredient(ingredient.id)} className="btn btn-xs btn-primary ml-2 btn-circle rounded-circle"><i className="fas fa-times"></i></button>          </span>
+            {ingredient.amount} {ingredient.unit} - {ingredient.name}
+          </span>
         </li>
       ))}
     </ul>
@@ -160,7 +164,7 @@ const MethodList = ({
   <>
     <h1 className="h4">
       Methods
-      <Button onClick={handleShow} variant="primary" size="sm" className="ml-2 rounded-circle text-right"><i className="fas fa-plus"></i></Button>
+      <Button onClick={handleShow} variant="primary" size="sm" className="ml-2">Add</Button>
     </h1>
 
     <ol>
@@ -168,7 +172,8 @@ const MethodList = ({
         <li key={method.id}>
           <span>
             {method.content}
-            <button onClick={() => deleteMethod(method.id)} className="btn btn-xs btn-primary ml-2 btn-circle rounded-circle"><i className="fas fa-times"></i></button></span>
+          </span>
+            {/* <button onClick={() => deleteMethod(method.id)} className="btn btn-xs btn-primary ml-2 btn-circle rounded-circle"><i className="fas fa-times"></i></button> */}
         </li>
     ))}
     </ol>

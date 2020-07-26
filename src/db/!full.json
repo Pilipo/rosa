@@ -33,7 +33,8 @@
     },
     "method3": {
       "content": "Combine wet and dry ingredients."
-    },
+    }
+  },
   "recipes": {
     "recipe1": {
       "name": "Biscuits",
