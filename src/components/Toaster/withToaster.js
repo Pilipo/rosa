@@ -18,7 +18,6 @@ const withToaster = (Component) => {
       this.timeout = 200;
       this.toastTimer = null;
       this.setShow = this.setShow.bind(this);
-      // console.log('withToaster props', this.props);
     }
 
     setShow(val) {
@@ -65,7 +64,6 @@ const withToaster = (Component) => {
         const { show } = this.state;
         // const handleClose = () => setShow(false);
         // const handleShow = () => setShow(true);
-        // console.log('toast found', this.state.toast);
         return (
           <>
             <div className="toast-container" tabIndex={-1}>

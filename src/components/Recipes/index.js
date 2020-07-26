@@ -42,7 +42,7 @@ class RecipesPage extends Component {
         <div>
           <h1>
             Recipes
-            <Button onClick={handleClick} variant="primary" size="sm" className="ml-2 rounded-circle text-right"><i className="fas fa-plus"></i></Button>
+            <Button onClick={handleClick} variant="primary" size="sm" className="ml-2 rounded-circle text-right"><i className="fas fa-plus">Add New</i></Button>
           </h1>
 
           {loading && <div>Loading ...</div>}
@@ -62,16 +62,11 @@ class RecipesPage extends Component {
 }
 
 const RecipeList = ({ recipes }) => (
-  <ul>
+  <div className="list-group list-group-flush">
     {recipes.map((recipe) => (
-      <li key={recipe.id}>
-        <span>
-          <strong>Name: </strong> {recipe.name}
-        </span>
-        <Link to={`/recipe/${recipe.id}`}> (Link)</Link>
-      </li>
+        <Link className="list-group-item list-group-item-action" to={`/recipe/${recipe.id}`}>{recipe.name} </Link>
     ))}
-  </ul>
+  </div>
 );
 
 const condition = (authUser) => !!authUser;
