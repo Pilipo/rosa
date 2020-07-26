@@ -19,12 +19,21 @@ const getMethodsById = (idArr) => {
 // *** Add ***
 
 const addMethod = (newMethodObj) => new Promise((resolve, reject) => {
-  axios.post(`${baseUrl}/methods.json`, newMethodObj);
+  axios.post(`${baseUrl}/methods.json`, newMethodObj)
+    .then(({ data }) => resolve(data))
+    .catch((err) => reject(err));
 });
+
+// *** Delete ***
+
+const deleteMethod = (methodId) => {
+  axios.delete(`${baseUrl}/methods/${methodId}.json`);
+};
 
 export default {
   getMethods,
   getMethodById,
   getMethodsById,
   addMethod,
+  deleteMethod,
 };
