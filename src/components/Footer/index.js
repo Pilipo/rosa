@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { withToaster } from '../Toaster';
+
 function Footer(props) {
   return (
     <footer className="sticky-footer bg-white">
@@ -12,4 +14,4 @@ function Footer(props) {
   );
 }
 
-export default Footer;
+export default withToaster(Footer);
