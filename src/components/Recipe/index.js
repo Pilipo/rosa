@@ -70,11 +70,11 @@ class RecipePage extends Component {
         this.setState({ ingredients: ingredientsList });
       });
 
-      const methods = dataArray[2].map((methodObj) => (methodData.getMethodById(methodObj.methodId)));
+      const methodPromiseArray = dataArray[2].map((methodObj) => methodData.getMethodById(methodObj.methodId));
 
-      Promise.all(methods).then((iData) => {
-        const methodsList = Object.keys(iData).map((key) => ({
-          ...iData[key].data,
+      Promise.all(methodPromiseArray).then((mData) => {
+        const methodsList = Object.keys(mData).map((key) => ({
+          ...mData[key].data,
           id: dataArray[2][key].methodId,
         }));
         this.setState({ methods: methodsList });
@@ -93,7 +93,12 @@ class RecipePage extends Component {
           addIngredient={this.addIngredient}
           deleteIngredient={this.deleteIngredient}
         />
-        <MethodList methods={this.state.methods} />
+        <MethodList className="text-left"
+          methods={this.state.methods}
+          recipeObj={this.state.recipe}
+          addMethod={this.addMethod}
+          deleteMethod={this.deleteMethod}
+        />
       </div>
     );
   }
@@ -140,7 +145,12 @@ const IngredientList = ({
   );
 };
 
-const MethodList = ({ methods }) => {
+const MethodList = ({
+  methods,
+  recipeObj,
+  addMethod,
+  deleteMethod,
+}) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -154,19 +164,26 @@ const MethodList = ({ methods }) => {
     </h1>
 
     <ol>
-      {methods.map((method) => (
+    {methods.map((method) => (
         <li key={method.id}>
-          {method.content}
+          <span>
+            {method.content}
+            <button onClick={() => deleteMethod(method.id)} className="btn btn-xs btn-primary ml-2 btn-circle rounded-circle"><i className="fas fa-times"></i></button></span>
         </li>
-      ))}
+    ))}
     </ol>
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">Add Method</Modal.Title>
       </Modal.Header>
-      <Modal.Body><MethodForm handler={handleClose} /></Modal.Body>
+      <Modal.Body>
+        <MethodForm
+          handler={handleClose}
+          recipeId={recipeObj.id}
+          addIngredient={addMethod}
+        />
+      </Modal.Body>
     </Modal>
-
   </>
   );
 };

@@ -11,6 +11,11 @@ const getMethods = () => new Promise((resolve, reject) => {
 
 const getMethodById = (uid) => axios.get(`${baseUrl}/methods/${uid}.json`);
 
+const getMethodsById = (idArr) => {
+  const promiseArr = idArr.map((uid) => axios.get(`${baseUrl}/methods/${uid}.json`));
+  return Promise.all(promiseArr);
+};
+
 // *** Add ***
 
 const addMethod = (newMethodObj) => new Promise((resolve, reject) => {
@@ -20,5 +25,6 @@ const addMethod = (newMethodObj) => new Promise((resolve, reject) => {
 export default {
   getMethods,
   getMethodById,
+  getMethodsById,
   addMethod,
 };
