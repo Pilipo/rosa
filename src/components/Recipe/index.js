@@ -6,8 +6,8 @@ import { withAuthorization } from '../Session';
 import recipeData from '../../helpers/data/recipeData';
 import ingredientData from '../../helpers/data/ingredientData';
 import methodData from '../../helpers/data/methodData';
+import MethodList from '../Method';
 import IngredientForm from './IngredientForm';
-import MethodForm from './MethodForm';
 import relationshipData from '../../helpers/data/relationshipData';
 
 import './recipe.scss';
@@ -25,6 +25,8 @@ class RecipePage extends Component {
 
     this.addIngredient = this.addIngredient.bind(this);
     this.deleteIngredient = this.deleteIngredient.bind(this);
+    this.addMethod = this.addMethod.bind(this);
+    this.deleteMethod = this.deleteMethod.bind(this);
   }
 
   addIngredient(ingredientObj) {
@@ -41,9 +43,16 @@ class RecipePage extends Component {
   }
 
   addMethod(methodObj) {
-    const { methods } = this.state;
-    methods.push(methodObj);
-    this.setState({ methods });
+    this.setState({
+      methods: [...this.state.methods, methodObj],
+    });
+  }
+
+  deleteMethod(methodId) {
+    const filteredMethods = this.state.methods.filter((item) => item.id !== methodId);
+    this.setState({ methods: filteredMethods });
+    methodData.deleteMethod(methodId);
+    relationshipData.deleteRelationship('recipe', 'method', methodId);
   }
 
   componentDidMount() {
@@ -142,50 +151,6 @@ const IngredientList = ({
           handler={handleClose}
           recipeId={recipeObj.id}
           addIngredient={addIngredient}
-        />
-      </Modal.Body>
-    </Modal>
-  </>
-  );
-};
-
-const MethodList = ({
-  methods,
-  recipeObj,
-  addMethod,
-  deleteMethod,
-}) => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  return (
-
-  <>
-    <h1 className="h4">
-      Methods
-      <Button onClick={handleShow} variant="primary" size="sm" className="ml-2">Add</Button>
-    </h1>
-
-    <ol>
-    {methods.map((method) => (
-        <li key={method.id}>
-          <span>
-            {method.content}
-          </span>
-            {/* <button onClick={() => deleteMethod(method.id)} className="btn btn-xs btn-primary ml-2 btn-circle rounded-circle"><i className="fas fa-times"></i></button> */}
-        </li>
-    ))}
-    </ol>
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">Add Method</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <MethodForm
-          handler={handleClose}
-          recipeId={recipeObj.id}
-          addIngredient={addMethod}
         />
       </Modal.Body>
     </Modal>
