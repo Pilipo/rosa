@@ -21,9 +21,7 @@ const addIngredient = (newIngredientObj) => new Promise((resolve, reject) => {
 
 // *** Delete ***
 
-const deleteIngredient = (ingredientId) => {
-  axios.delete(`${baseUrl}/ingredients/${ingredientId}.json`);
-};
+const deleteIngredient = (ingredientId) => axios.delete(`${baseUrl}/ingredients/${ingredientId}.json`);
 
 export default {
   getIngredients,

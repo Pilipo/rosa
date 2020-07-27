@@ -19,10 +19,16 @@ class RecipesPage extends Component {
       loading: false,
       recipes: [],
     };
+
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
     this.setState({ loading: true });
+    this.handleRefresh();
+  }
+
+  handleRefresh() {
     recipeData.getRecipes().then((data) => {
       this.setState({
         recipes: data,
@@ -30,6 +36,11 @@ class RecipesPage extends Component {
         show: false,
       });
     });
+  }
+
+  handleDelete(recipeId) {
+    recipeData.deleteRecipe(recipeId)
+      .then((data) => this.handleRefresh());
   }
 
   render() {
@@ -47,7 +58,7 @@ class RecipesPage extends Component {
 
           {loading && <div>Loading ...</div>}
 
-          {recipes && <RecipeList recipes={recipes} />}
+          {recipes && <RecipeList recipes={recipes} handleDelete={this.handleDelete} />}
 
           <Modal show={this.state.show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -61,10 +72,15 @@ class RecipesPage extends Component {
   }
 }
 
-const RecipeList = ({ recipes }) => (
+const RecipeList = ({ recipes, handleDelete }) => (
   <div className="list-group list-group-flush">
     {recipes.map((recipe) => (
-        <Link key={recipe.id} className="list-group-item list-group-item-action" to={`/recipe/${recipe.id}`}>{recipe.name} </Link>
+    <div key={recipe.id} className="list-group-item list-group-item-action">
+      <div className="row">
+        <Link className="offset-1 col-9" to={`/recipe/${recipe.id}`}>{recipe.name} </Link>
+        <button className="col-2 text-center" onClick={() => handleDelete(recipe.id)}>Delete</button>
+      </div>
+    </div>
     ))}
   </div>
 );
