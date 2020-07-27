@@ -3,9 +3,11 @@ import apiKeys from '../apiKeys';
 
 const baseUrl = apiKeys.databaseURL;
 
-const getRelationshipId = (parentType, childType, childId) => {
-  return axios.get(`${baseUrl}/${parentType}-${childType}.json?orderBy="${childType}Id"&equalTo="${childId}"&limitToFirst=1`);
-};
+const getRelationshipId = (
+  parentType,
+  childType,
+  childId,
+) => axios.get(`${baseUrl}/${parentType}-${childType}.json?orderBy="${childType}Id"&equalTo="${childId}"&limitToFirst=1`);
 
 // parent and child obj like thus: {name: 'recipe', id: '-MKi395hh6h9t94'}
 const addRelationship = (parentObj, childObj) => {

@@ -26,9 +26,7 @@ const addMethod = (newMethodObj) => new Promise((resolve, reject) => {
 
 // *** Delete ***
 
-const deleteMethod = (methodId) => {
-  axios.delete(`${baseUrl}/methods/${methodId}.json`);
-};
+const deleteMethod = (methodId) => axios.delete(`${baseUrl}/methods/${methodId}.json`);
 
 export default {
   getMethods,
