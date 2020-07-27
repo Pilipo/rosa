@@ -1,71 +1,48 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import { Modal, Button } from 'react-bootstrap';
 
-import { withFirebase } from '../Firebase';
-import { withAuthorization } from '../Session';
+import IngredientForm from './IngredientForm';
 
-class IngredientPage extends Component {
-  constructor(props) {
-    super(props);
+const IngredientList = ({
+  ingredients,
+  recipeObj,
+  addIngredient,
+  deleteIngredient,
+}) => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
-    this.state = {
-      loading: false,
-      ingredients: [],
-    };
-  }
+  return (
+  <>
+    <h1 className="h4">
+      Ingredients
+      <Button variant="primary" size="sm" onClick={handleShow} className="ml-2">Add</Button>
+    </h1>
+    <ul className="list-unstyled">
+      {ingredients.map((ingredient) => (
+        <li key={ingredient.id}>
+          <span>
+            {ingredient.amount} {ingredient.unit} - {ingredient.name}
+          </span>
+          <button onClick={() => deleteIngredient(ingredient.id)} className="btn btn-xs btn-primary ml-2">X</button>
+        </li>
+      ))}
+    </ul>
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">Add Ingredient</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <IngredientForm
+          handler={handleClose}
+          recipeId={recipeObj.id}
+          addIngredient={addIngredient}
+        />
+      </Modal.Body>
+    </Modal>
+  </>
+  );
+};
 
-  componentDidMount() {
-    this.setState({ loading: true });
-
-    this.props.firebase.ingredients().on('value', (snapshot) => {
-      const ingObject = snapshot.val();
-
-      if (ingObject !== null) {
-        const usersList = Object.keys(ingObject).map((key) => ({
-          ...ingObject[key],
-          uid: key,
-        }));
-
-        this.setState({
-          ingredients: usersList,
-          loading: false,
-        });
-      }
-    });
-  }
-
-  componentWillUnmount() {
-    this.props.firebase.ingredients().off();
-  }
-
-  render() {
-    const { ingredients, loading } = this.state;
-    return (
-        <div>
-          <h1>Admin</h1>
-
-          {loading && <div>Loading ...</div>}
-
-          <IngredientList ingredients={ingredients} />
-        </div>
-    );
-  }
-}
-
-const IngredientList = ({ ingredients }) => (
-  <ul>
-    {ingredients.map((ingredient) => (
-      <li key={ingredient.uid}>
-        <span>
-          <strong>ID:</strong> {ingredient.uid}
-        </span>
-        <span>
-          <strong>Name:</strong> {ingredient.name}
-        </span>
-      </li>
-    ))}
-  </ul>
-);
-
-const condition = (authUser) => !!authUser;
-
-export default withAuthorization(condition)(withFirebase(IngredientPage));
+export default IngredientList;
