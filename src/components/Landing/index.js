@@ -10,7 +10,7 @@ const Landing = (props) => {
       .makeToast('New recipe created! Let\'s add ingredients and methods!');
   };
   return (
-    <ShoppingList />
+    <div>Build the list</div>
   );
 };
 

@@ -5,6 +5,7 @@ import Gravatar from 'react-gravatar';
 import SignOutButton from '../SignOut';
 import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
+import Alerts from './Alerts';
 
 const NavBar = () => (
   <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -23,6 +24,7 @@ const NavBar = () => (
 
 const NavBarAuth = (props) => (
   <ul className="navbar-nav ml-auto">
+    <Alerts />
     <div className="topbar-divider d-none d-sm-block"></div>
     <li className="nav-item dropdown no-arrow">
         <a className="nav-link dropdown-toggle" href="/#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
