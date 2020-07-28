@@ -5,7 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import Firebase, { FirebaseContext } from './components/Firebase';
 import Toast, { ToastContext } from './components/Toast';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles/sb-admin-2.css';
+import './styles/index.scss';
 
 ReactDOM.render(
   <ToastContext.Provider value={new Toast()}>
