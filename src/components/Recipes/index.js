@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
 
 import { withFirebase } from '../Firebase';
-import { withAuthorization } from '../Session';
 import recipeData from '../../helpers/data/recipeData';
 import RecipeTitleForm from '../Recipe/RecipeForm';
 
@@ -14,24 +13,36 @@ class RecipesPage extends Component {
     this.state = {
       loading: false,
       recipes: [],
+      selectedRecipesIds: [],
     };
 
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleCheck = this.handleCheck.bind(this);
   }
 
   componentDidMount() {
     this.setState({ loading: true });
-    this.handleRefresh();
+    this.props.firebase.auth.onAuthStateChanged((user) => this.handleRefresh());
   }
 
   handleRefresh() {
-    recipeData.getRecipes().then((data) => {
-      this.setState({
-        recipes: data,
-        loading: false,
-        show: false,
+    Promise.all([
+      recipeData.getRecipes(),
+      this.props.firebase.shoppingList.get(),
+    ])
+      .then((data) => {
+        const newRecipes = data[0].map((recipe) => {
+          const newRecipe = recipe;
+          newRecipe.inList = false;
+          if (data[1] && data[1].recipes.indexOf(newRecipe.id) !== -1) newRecipe.inList = true;
+          return newRecipe;
+        });
+        this.setState({
+          loading: false,
+          recipes: newRecipes,
+          selectedRecipesIds: data[1],
+        });
       });
-    });
   }
 
   handleDelete(recipeId) {
@@ -39,9 +50,14 @@ class RecipesPage extends Component {
       .then((data) => this.handleRefresh());
   }
 
-  handleCheck(evt, recipeId) {
-    if (evt.target.checked) console.log(`Add ${recipeId} to the list`);
-    else console.log(`Remove ${recipeId} from the list`);
+  handleCheck(evt) {
+    if (evt.target.checked) {
+      this.props.firebase.shoppingList.add(this.props.firebase.auth.currentUser.uid, evt.target.name)
+        .then(() => this.handleRefresh());
+    } else {
+      this.props.firebase.shoppingList.delete(this.props.firebase.auth.currentUser.uid, evt.target.name)
+        .then(() => this.handleRefresh());
+    }
   }
 
   render() {
@@ -78,7 +94,7 @@ const RecipeList = ({ recipes, handleDelete, handleCheck }) => (
     {recipes.map((recipe) => (
     <div key={recipe.id} className="list-group-item list-group-item-action">
       <div className="row">
-        <input className="col-1" type="checkbox" onChange={(e) => handleCheck(e, recipe.id)}></input>
+        <input className="col-1" name={recipe.id} type="checkbox" checked={recipe.inList} onChange={(e) => handleCheck(e, recipe.id)}></input>
         <Link className="col-9" to={`/recipe/${recipe.id}`}>{recipe.name} </Link>
         <button className="col-2 text-center" onClick={() => handleDelete(recipe.id)}>Delete</button>
       </div>
@@ -87,6 +103,4 @@ const RecipeList = ({ recipes, handleDelete, handleCheck }) => (
   </div>
 );
 
-const condition = (authUser) => !!authUser;
-
-export default withAuthorization(condition)(withFirebase(RecipesPage));
+export default withFirebase(RecipesPage);
