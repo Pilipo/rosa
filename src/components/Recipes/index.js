@@ -1,7 +1,3 @@
-// an index of all the recipes.
-// needs imput field for creating new recipes
-// eventually searchable
-
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
