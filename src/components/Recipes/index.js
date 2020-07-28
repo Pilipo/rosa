@@ -43,6 +43,11 @@ class RecipesPage extends Component {
       .then((data) => this.handleRefresh());
   }
 
+  handleCheck(evt, recipeId) {
+    if (evt.target.checked) console.log(`Add ${recipeId} to the list`);
+    else console.log(`Remove ${recipeId} from the list`);
+  }
+
   render() {
     const { recipes, loading } = this.state;
 
@@ -58,7 +63,7 @@ class RecipesPage extends Component {
 
           {loading && <div>Loading ...</div>}
 
-          {recipes && <RecipeList recipes={recipes} handleDelete={this.handleDelete} />}
+          {recipes && <RecipeList recipes={recipes} handleDelete={this.handleDelete} handleCheck={this.handleCheck} />}
 
           <Modal show={this.state.show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -72,12 +77,13 @@ class RecipesPage extends Component {
   }
 }
 
-const RecipeList = ({ recipes, handleDelete }) => (
+const RecipeList = ({ recipes, handleDelete, handleCheck }) => (
   <div className="list-group list-group-flush">
     {recipes.map((recipe) => (
     <div key={recipe.id} className="list-group-item list-group-item-action">
       <div className="row">
-        <Link className="offset-1 col-9" to={`/recipe/${recipe.id}`}>{recipe.name} </Link>
+        <input className="col-1" type="checkbox" onChange={(e) => handleCheck(e, recipe.id)}></input>
+        <Link className="col-9" to={`/recipe/${recipe.id}`}>{recipe.name} </Link>
         <button className="col-2 text-center" onClick={() => handleDelete(recipe.id)}>Delete</button>
       </div>
     </div>
