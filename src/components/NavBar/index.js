@@ -5,13 +5,12 @@ import Gravatar from 'react-gravatar';
 import SignOutButton from '../SignOut';
 import * as ROUTES from '../../constants/routes';
 import { AuthUserContext } from '../Session';
-import Alerts from './Alerts';
 
 const NavBar = () => (
   <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
     <Link to={ROUTES.LANDING} className="sidebar-brand d-flex align-items-center justify-content-center">
       <div className="sidebar-brand-icon rotate-n-15">
-        <i className="fas fa-route"></i>
+        <i className="fas fa-2x fa-shopping-basket"></i>
       </div>
       <div className="sidebar-brand-text text-capitalize mx-3">{process.env.REACT_APP_NAME}<span className="text-gray-500"> {process.env.REACT_APP_VERSION}</span></div>
     </Link>
