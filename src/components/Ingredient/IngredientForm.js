@@ -62,7 +62,7 @@ class IngredientForm extends Component {
     ingredientDataHelper
       .addIngredient({ name, amount, unit })
       .then((data) => {
-        this.setState({ name, amount, unit });
+        // this.setState({ name, amount, unit });
         relationshipHelper.addRelationship({
           name: 'recipe',
           id: this.state.recipeId,

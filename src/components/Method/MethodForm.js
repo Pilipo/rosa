@@ -57,7 +57,7 @@ class MethodForm extends Component {
     methodDataHelper
       .addMethod({ content })
       .then((data) => {
-        this.setState({ content });
+        // this.setState({ content });
         relationshipHelper.addRelationship({
           name: 'recipe',
           id: this.state.recipeId,
