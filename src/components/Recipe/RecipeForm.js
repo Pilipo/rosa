@@ -15,6 +15,11 @@ class RecipeTitleForm extends Component {
     super(props);
 
     this.state = { ...INITIAL_STATE };
+    this.nameInput = React.createRef();
+  }
+
+  componentDidMount = () => {
+    setTimeout(() => this.nameInput.current.focus(), 1);
   }
 
   onSubmit = (event) => {
@@ -49,6 +54,7 @@ class RecipeTitleForm extends Component {
         <div className="form-group">
           <input
             className="form-control form-control-user"
+            ref={this.nameInput}
             id="inputRecipeName"
             name="name"
             value={name}
