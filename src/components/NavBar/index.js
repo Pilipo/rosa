@@ -24,7 +24,7 @@ const NavBar = () => (
 
 const NavBarAuth = (props) => (
   <ul className="navbar-nav ml-auto">
-    <Alerts />
+    {/* <Alerts /> */}
     <div className="topbar-divider d-none d-sm-block"></div>
     <li className="nav-item dropdown no-arrow">
         <a className="nav-link dropdown-toggle" href="/#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
