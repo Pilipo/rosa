@@ -36,6 +36,40 @@ const addRecipe = (newRecipeObj) => new Promise((resolve, reject) => {
     .then((data) => resolve(data.data));
 });
 
+const addRecipeWithChildren = (recipeObj) => new Promise((resolve, reject) => {
+  // 1. post recipe and get id
+  const {
+    name,
+    servings,
+    ingredient,
+    method,
+  } = recipeObj;
+  const promiseArr = [];
+  addRecipe({ name, servings })
+    .then((recipeData) => {
+      // 2. iterate posting ingredients and methods and get ids
+      // 3. iterate ingredient/method ids and post relationships
+      if (ingredient) {
+        ingredient.forEach((ing) => {
+          const ingPromise = ingredientHelper.addIngredient({ name: ing });
+          promiseArr.push(ingPromise);
+          ingPromise
+            .then((ingData) => relHelper.addRelationship({ id: recipeData.name, name: 'recipe' }, { id: ingData.name, name: 'ingredient' }));
+        });
+      }
+      if (method) {
+        method.forEach((met) => {
+          const metPromise = methodHelper.addMethod({ name: met });
+          promiseArr.push(metPromise);
+          metPromise
+            .then((metData) => relHelper.addRelationship({ id: recipeData.name, name: 'recipe' }, { id: metData.name, name: 'method' }));
+        });
+      }
+    })
+    .then(() => resolve(Promise.all(promiseArr)))
+    .catch((err) => reject(err));
+});
+
 // *** Delete ***
 
 const deleteRecipe = (recipeId) => new Promise((resolve, reject) => {
@@ -72,5 +106,6 @@ export default {
   getMethodsByRecipeId,
   getIngredientsByRecipeId,
   addRecipe,
+  addRecipeWithChildren,
   deleteRecipe,
 };
