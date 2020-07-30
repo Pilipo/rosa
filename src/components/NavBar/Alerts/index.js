@@ -6,10 +6,11 @@ const Alerts = () => (
           <i className="fas fa-clipboard-list fa-fw"></i>
           <span className="badge badge-danger badge-counter">4</span>
         </a>
-        <div className="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+        <div name="MenuAlertList" className="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
           <h6 className="dropdown-header">
             Your Menu
           </h6>
+          {/* MenuAlertGroup starts here */}
           <a className="dropdown-item d-flex align-items-center" href="/#">
             <div className="mr-3">
               <div className="icon-circle bg-success">
@@ -24,6 +25,8 @@ const Alerts = () => (
               </ul>
             </div>
           </a>
+          {/* MenuAlertGroup ends here */}
+          {/* MenuAlertGroup starts here */}
           <a className="dropdown-item d-flex align-items-center" href="/#">
             <div className="mr-3">
               <div className="icon-circle bg-success">
@@ -37,6 +40,8 @@ const Alerts = () => (
               </ul>
             </div>
           </a>
+          {/* MenuAlertGroup ends here */}
+          {/* MenuAlertGroup starts here */}
           <a className="dropdown-item d-flex align-items-center" href="/#">
             <div className="mr-3">
               <div className="icon-circle bg-success">
@@ -50,6 +55,7 @@ const Alerts = () => (
               </ul>
             </div>
           </a>
+          {/* MenuAlertGroup ends here */}
           <a className="dropdown-item text-center small text-gray-500" href="/#">Show the List</a>
         </div>
       </li>);
