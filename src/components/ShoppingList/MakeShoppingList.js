@@ -17,6 +17,10 @@ function MakeShoppingList() {
         <div className="card-body">
           <div className="row no-gutters align-items-center">
             <div className="col mr-2">
+              <li>search bar??</li>
+              <li>list of all recipes</li>
+              <li>recipes are selectable</li>
+              <li>confirm button for complete</li>
             </div>
           </div>
         </div>

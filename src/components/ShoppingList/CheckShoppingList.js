@@ -17,6 +17,9 @@ function CheckShoppingList() {
         <div className="card-body">
           <div className="row no-gutters align-items-center">
             <div className="col mr-2">
+              <li>list of selected recipes</li>
+              <li>recipes are checkable</li>
+              <li>confirm button for complete (deletes the list)</li>
             </div>
           </div>
         </div>
