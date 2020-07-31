@@ -31,7 +31,6 @@ const MakeShoppingList = (props) => {
       setSelectedRecipes([...selectedRecipes, recipe]);
     }
     e.preventDefault();
-    console.log(e.target);
   };
 
   return (
@@ -48,17 +47,11 @@ const MakeShoppingList = (props) => {
           </div>
         </div>
         <div className="card-body">
-        <form className="form-inline d-flex justify-content-center md-form form-sm active-cyan-2 mt-2">
+        <form className="form-inline d-flex justify-content-center md-form form-sm active-cyan-2 mt-2 mb-2">
           <input onChange={handleChange} className="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search"
             aria-label="Search" />
           <i className="fas fa-search" aria-hidden="true"></i>
         </form>
-          <div className="row no-gutters align-items-center">
-            <div className="col mr-2">
-              <li>recipes are selectable</li>
-              <li>confirm button for complete</li>
-            </div>
-          </div>
           <div className="row no-gutters align-items-center">
             <div className="col mr-2 overflow-hide">
               <div className="list-group list-group-flush">

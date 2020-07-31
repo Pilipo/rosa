@@ -69,6 +69,18 @@ class SignInFormBase extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handleGoogle = () => {
+    this.props.firebase
+      .doGoogleAuth()
+      .then((result) => {
+        this.setState({ ...INITIAL_STATE });
+        this.props.history.push(ROUTES.LANDING);
+      })
+      .catch((error) => {
+        this.setState({ error });
+      });
+  };
+
   render() {
     const { email, password, error } = this.state;
 
@@ -110,6 +122,10 @@ class SignInFormBase extends Component {
           Login
         </button>
         {error && <p>{error.message}</p>}
+        <hr />
+        <button onClick={this.handleGoogle} className="btn btn-google btn-user btn-block">
+          <i className="fab fa-google fa-fw"></i> Login with Google
+        </button>
       </form>
     );
   }

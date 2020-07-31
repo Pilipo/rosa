@@ -10,10 +10,13 @@ class Firebase {
 
     this.auth = app.auth();
     this.db = app.database();
+    this.google = new app.auth.GoogleAuthProvider();
     this.auth.onAuthStateChanged((user) => { this.shoppingList = new ShoppingList(user); });
   }
 
   // *** Auth API ***
+
+  doGoogleAuth = () => this.auth.signInWithPopup(this.google);
 
   doCreateUserWithEmailAndPassword = (email, password) => this.auth.createUserWithEmailAndPassword(email, password);
 
