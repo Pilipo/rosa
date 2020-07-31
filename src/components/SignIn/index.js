@@ -78,7 +78,7 @@ class SignInFormBase extends Component {
         this.props.history.push(ROUTES.LANDING);
       })
       .catch((error) => {
-        this.setState({ error });
+        console.log({ error });
       });
   };
 
