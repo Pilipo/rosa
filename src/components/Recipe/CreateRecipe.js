@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { TextField, Button } from '@material-ui/core';
 
 import recipeHelper from '../../helpers/data/recipeData';
@@ -6,6 +6,8 @@ import recipeHelper from '../../helpers/data/recipeData';
 const CreateRecipe = () => {
   const [recipeData, setRecipeData] = useState({});
   const [fieldValues, setFieldValues] = useState({ ingredient: '', method: '' });
+  const formRef = useRef(null);
+  const nameRef = useRef(null);
 
   const handleEnter = (event) => {
     if (event.keyCode === 13) {
@@ -37,6 +39,9 @@ const CreateRecipe = () => {
   };
 
   const handleSubmit = (event) => {
+    event.preventDefault();
+    formRef.current.reset();
+    nameRef.current.focus();
     recipeHelper.addRecipeWithChildren(recipeData);
     setRecipeData({});
   };
@@ -57,7 +62,7 @@ const CreateRecipe = () => {
       <div className="card-body">
         <div className="row no-gutters align-items-center">
           <div className="col mr-2">
-            <form className="user" >
+            <form className="user" ref={formRef} >
             <TextField
                 label="Name"
                 name="name"
@@ -65,6 +70,7 @@ const CreateRecipe = () => {
                 margin="normal"
                 onKeyDown={handleEnter}
                 onChange={handleChange}
+                ref={nameRef}
               />
               <TextField
                 label="Yield"
@@ -103,7 +109,7 @@ const CreateRecipe = () => {
                 {recipeData.method && recipeData.method.map((met, i) => <li key={i}>{met}</li>)}
               </ul>
               <hr className="dropdown-divider" />
-              <Button onClick={handleSubmit} variant="contained" color="primary">Save Recipe</Button>
+              <Button type="submit" onClick={handleSubmit} variant="contained" color="primary">Save Recipe</Button>
             </form>
           </div>
         </div>
