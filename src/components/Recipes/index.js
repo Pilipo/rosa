@@ -47,7 +47,7 @@ class RecipesPage extends Component {
 
   handleDelete(recipeId) {
     recipeData.deleteRecipe(recipeId)
-      .then((data) => this.handleRefresh());
+      .then(() => this.handleRefresh());
   }
 
   handleCheck(evt) {

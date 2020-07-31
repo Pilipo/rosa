@@ -10,7 +10,7 @@ const Landing = () => (
   <div className="container-fluid">
   <div className="row">
   <AuthUserContext.Consumer>
-      {(authUser) => (authUser ? <><CreateRecipe /> <MakeShoppingList /> <CheckShoppingList /></> : <h1 className="mt-3 text-center w-100"><a href='/signin'>Welcome</a></h1>)}
+      {(authUser) => (authUser ? <><CreateRecipe /> <MakeShoppingList authUser={authUser} /> <CheckShoppingList /></> : <h1 className="mt-3 text-center w-100"><a href='/signin'>Welcome</a></h1>)}
     </AuthUserContext.Consumer>
   </div>
 </div>
