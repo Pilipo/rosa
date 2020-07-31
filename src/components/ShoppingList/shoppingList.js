@@ -10,7 +10,7 @@ class ShoppingList {
   get = () => {
     const promise = listHelper.getList(this.userObj.uid);
     promise
-      .then((data) => { this.list = data.recipes; });
+      .then((data) => { if (data) this.list = data.recipes; });
     return promise;
   }
 

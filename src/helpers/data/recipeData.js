@@ -9,9 +9,13 @@ const baseUrl = apiKeys.databaseURL;
 
 // *** Get ***
 
-const getRecipes = () => new Promise((resolve, reject) => {
+const getRecipes = (searchPhrase = null) => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/recipes.json`)
-    .then(({ data }) => resolve(utils.convertFirebaseCollection(data)))
+    .then(({ data }) => {
+      const convertedData = utils.convertFirebaseCollection(data);
+      if (searchPhrase) resolve(utils.searchFirebaseCollection(convertedData, searchPhrase));
+      else resolve(convertedData);
+    })
     .catch((err) => reject(err));
 });
 

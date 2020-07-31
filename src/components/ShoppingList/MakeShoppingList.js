@@ -1,6 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-function MakeShoppingList() {
+import recipeHelper from '../../helpers/data/recipeData';
+import listHelper from '../../helpers/data/listData';
+import './index.scss';
+
+const MakeShoppingList = (props) => {
+  const [recipes, setRecipes] = useState([]);
+  const [selectedRecipes, setSelectedRecipes] = useState([]);
+  const [searchPhrase, setSearchPhrase] = useState('');
+
+  useEffect(() => {
+    recipeHelper.getRecipes(searchPhrase)
+      .then((data) => setRecipes(data));
+    selectedRecipes.length > 0 && listHelper.setList(props.authUser.uid, selectedRecipes);
+  }, [searchPhrase, props.authUser.uid, selectedRecipes]);
+
+  useEffect(() => {
+    listHelper.getList(props.authUser.uid)
+      .then((data) => setSelectedRecipes(data.recipes));
+  }, [props.authUser.uid]);
+
+  const handleChange = (e) => {
+    setSearchPhrase(e.target.value);
+  };
+
+  const handleClick = (recipe, e) => {
+    if (selectedRecipes.filter((selectedRecipe) => selectedRecipe.name === recipe.name).length) {
+      setSelectedRecipes(selectedRecipes.filter((selectedRecipe) => selectedRecipe.name !== recipe.name));
+    } else {
+      setSelectedRecipes([...selectedRecipes, recipe]);
+    }
+    e.preventDefault();
+    console.log(e.target);
+  };
+
   return (
     <div className="col-xl-4 col-lg-6 mb-4">
       <div className="card border-left-success shadow h-100">
@@ -15,66 +48,32 @@ function MakeShoppingList() {
           </div>
         </div>
         <div className="card-body">
+        <form className="form-inline d-flex justify-content-center md-form form-sm active-cyan-2 mt-2">
+          <input onChange={handleChange} className="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search"
+            aria-label="Search" />
+          <i className="fas fa-search" aria-hidden="true"></i>
+        </form>
           <div className="row no-gutters align-items-center">
             <div className="col mr-2">
-              <div className="text-xs font-weight-bold text-info text-uppercase mb-1"></div>
-              <div className="row no-gutters align-items-center">
-                <div className="col">
-                  <div className="row no-gutters align-items-center">
-                    <div className="col">
-                      <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800 text-center"><a href="/servers">Start/Stop</a></div>
-                    </div>
-                    <div className="col">
-                      <div className="row no-gutters align-items-center">
-                        <div className="col-auto">
-                          <div className="h6 mb-0 mr-3 font-weight-bold text-gray-800">100%</div>
-                        </div>
-                        <div className="col">
-                          <div className="progress progress-sm mr-2">
-                            <div className="progress-bar bg-info" role="progressbar" style={{ width: `${100}%` }} aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row no-gutters align-items-center">
-                    <div className="col text-center mt-4">
-                      <p>
-                        Start and stop EC2 instances from the servers dashboard
-                            </p>
-                    </div>
-                  </div>
-                  <hr className="dropdown-divider" />
-                </div>
-              </div>
-              <div className="row no-gutters align-items-center">
-                <div className="col">
-                  <div className="row no-gutters align-items-center">
-                    <div className="col">
-                      <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800 text-center">Snapshotting</div>
-                    </div>
-                    <div className="col">
-                      <div className="row no-gutters align-items-center">
-                        <div className="col-auto">
-                          <div className="h6 mb-0 mr-3 font-weight-bold text-gray-800">0%</div>
-                        </div>
-                        <div className="col">
-                          <div className="progress progress-sm mr-2">
-                            <div className="progress-bar bg-info" role="progressbar" style={{ width: `${0}%` }} aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row no-gutters align-items-center">
-                    <div className="col text-center mt-4">
-                      <p>
-                        Feature description
-                      </p>
-                    </div>
-                  </div>
-                  <hr className="dropdown-divider" />
-                </div>
+              <li>recipes are selectable</li>
+              <li>confirm button for complete</li>
+            </div>
+          </div>
+          <div className="row no-gutters align-items-center">
+            <div className="col mr-2">
+              <div className="list-group list-group-flush">
+                {recipes ? (
+                  recipes.map((recipe) => (
+                      <button
+                        key={recipe.id}
+                        className={`list-group-item list-group-item-action ${selectedRecipes.filter((rec) => rec.name === recipe.name).length > 0 ? 'active' : ''}`}
+                        onClick={(e) => handleClick(recipe, e)}
+                        onMouseDown={(e) => { e.preventDefault(); }}
+                      >
+                        <div>{recipe.name}</div>
+                        <small className="ml-2">{recipe.servings}</small>
+                      </button>
+                  ))) : 'loading...'}
               </div>
             </div>
           </div>
@@ -82,6 +81,6 @@ function MakeShoppingList() {
       </div>
     </div>
   );
-}
+};
 
 export default MakeShoppingList;

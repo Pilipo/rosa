@@ -17,65 +17,9 @@ function CheckShoppingList() {
         <div className="card-body">
           <div className="row no-gutters align-items-center">
             <div className="col mr-2">
-              <div className="text-xs font-weight-bold text-info text-uppercase mb-1"></div>
-              <div className="row no-gutters align-items-center">
-                <div className="col">
-                  <div className="row no-gutters align-items-center">
-                    <div className="col">
-                      <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800 text-center"><a href="/servers">Start/Stop</a></div>
-                    </div>
-                    <div className="col">
-                      <div className="row no-gutters align-items-center">
-                        <div className="col-auto">
-                          <div className="h6 mb-0 mr-3 font-weight-bold text-gray-800">100%</div>
-                        </div>
-                        <div className="col">
-                          <div className="progress progress-sm mr-2">
-                            <div className="progress-bar bg-info" role="progressbar" style={{ width: `${100}%` }} aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row no-gutters align-items-center">
-                    <div className="col text-center mt-4">
-                      <p>
-                        Start and stop EC2 instances from the servers dashboard
-                            </p>
-                    </div>
-                  </div>
-                  <hr className="dropdown-divider" />
-                </div>
-              </div>
-              <div className="row no-gutters align-items-center">
-                <div className="col">
-                  <div className="row no-gutters align-items-center">
-                    <div className="col">
-                      <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800 text-center">Snapshotting</div>
-                    </div>
-                    <div className="col">
-                      <div className="row no-gutters align-items-center">
-                        <div className="col-auto">
-                          <div className="h6 mb-0 mr-3 font-weight-bold text-gray-800">0%</div>
-                        </div>
-                        <div className="col">
-                          <div className="progress progress-sm mr-2">
-                            <div className="progress-bar bg-info" role="progressbar" style={{ width: `${0}%` }} aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row no-gutters align-items-center">
-                    <div className="col text-center mt-4">
-                      <p>
-                        Feature description
-                      </p>
-                    </div>
-                  </div>
-                  <hr className="dropdown-divider" />
-                </div>
-              </div>
+              <li>list of selected recipes</li>
+              <li>recipes are checkable</li>
+              <li>confirm button for complete (deletes the list)</li>
             </div>
           </div>
         </div>
