@@ -69,7 +69,8 @@ class SignInFormBase extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleGoogle = () => {
+  handleGoogle = (e) => {
+    e.preventDefault();
     this.props.firebase
       .doGoogleAuth()
       .then((result) => {

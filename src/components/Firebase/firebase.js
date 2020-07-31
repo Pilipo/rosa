@@ -16,7 +16,7 @@ class Firebase {
 
   // *** Auth API ***
 
-  doGoogleAuth = () => this.auth.signInWithPopup(this.google);
+  doGoogleAuth = () => this.auth.signInWithRedirect(this.google);
 
   doCreateUserWithEmailAndPassword = (email, password) => this.auth.createUserWithEmailAndPassword(email, password);
 
