@@ -60,7 +60,7 @@ const MakeShoppingList = (props) => {
             </div>
           </div>
           <div className="row no-gutters align-items-center">
-            <div className="col mr-2">
+            <div className="col mr-2 overflow-hide">
               <div className="list-group list-group-flush">
                 {recipes ? (
                   recipes.map((recipe) => (
