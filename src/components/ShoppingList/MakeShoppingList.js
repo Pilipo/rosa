@@ -34,41 +34,27 @@ const MakeShoppingList = (props) => {
   };
 
   return (
-    <div className="col-xl-4 col-lg-6 mb-4">
-      <div className="card border-left-success shadow h-100">
-        <div className="card-header py-3">
-          <div className="row no-gutters align-items-center">
-            <div className="col mr-2">
-              <h6 className="m-0 font-weight-bold text-primary">Make a shopping list</h6>
-            </div>
-            <div className="col-auto">
-              <i className="fas fa-list fa-2x text-gray-300"></i>
-            </div>
-          </div>
-        </div>
-        <div className="card-body">
-        <form className="form-inline d-flex justify-content-center md-form form-sm active-cyan-2 mt-2 mb-2">
-          <input onChange={handleChange} className="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search"
-            aria-label="Search" />
-          <i className="fas fa-search" aria-hidden="true"></i>
-        </form>
-          <div className="row no-gutters align-items-center">
-            <div className="col mr-2 overflow-hide">
-              <div className="list-group list-group-flush">
-                {recipes ? (
-                  recipes.map((recipe) => (
-                      <button
-                        key={recipe.id}
-                        className={`list-group-item list-group-item-action ${selectedRecipes.filter((rec) => rec.name === recipe.name).length > 0 ? 'active' : ''}`}
-                        onClick={(e) => handleClick(recipe, e)}
-                        onMouseDown={(e) => { e.preventDefault(); }}
-                      >
-                        <div>{recipe.name}</div>
-                        <small className="ml-2">{recipe.servings}</small>
-                      </button>
-                  ))) : 'loading...'}
-              </div>
-            </div>
+    <div className="col-xl-4 col-lg-6 mb-5">
+      {/* <form className="form-inline d-flex justify-content-center md-form form-sm active-cyan-2 mt-2 mb-2">
+        <input onChange={handleChange} className="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search"
+          aria-label="Search" />
+        <i className="fas fa-search" aria-hidden="true"></i>
+      </form> */}
+      <div className="row no-gutters align-items-center mb-5">
+        <div className="col mr-2 mb-5">
+          <div className="list-group list-group-flush">
+            {recipes ? (
+              recipes.map((recipe) => (
+                  <button
+                    key={recipe.id}
+                    className={`list-group-item list-group-item-action ${selectedRecipes.filter((rec) => rec.name === recipe.name).length > 0 ? 'active' : ''}`}
+                    onClick={(e) => handleClick(recipe, e)}
+                    onMouseDown={(e) => { e.preventDefault(); }}
+                  >
+                    <div>{recipe.name}</div>
+                    <small className="ml-2">{recipe.servings}</small>
+                  </button>
+              ))) : 'loading...'}
           </div>
         </div>
       </div>

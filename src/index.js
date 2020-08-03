@@ -5,7 +5,6 @@ import * as serviceWorker from './serviceWorker';
 import Firebase, { FirebaseContext } from './components/Firebase';
 import Toast, { ToastContext } from './components/Toast';
 import ShoppingList, { ShoppingListContext } from './components/ShoppingList';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/index.scss';
 
 ReactDOM.render(

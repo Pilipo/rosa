@@ -47,7 +47,7 @@ const CreateRecipe = () => {
   };
 
   return (
-  <div className="col-xl-4 col-lg-6 mb-4">
+  <div className="col-xl-4 col-lg-6 mb-4 mt-2">
     <div className="card border-left-success shadow h-100">
       <div className="card-header py-3">
         <div className="row no-gutters align-items-center">
@@ -62,7 +62,7 @@ const CreateRecipe = () => {
       <div className="card-body">
         <div className="row no-gutters align-items-center">
           <div className="col mr-2">
-            <form className="user" ref={formRef} >
+            <form className="user" ref={formRef} autoComplete="off" >
             <TextField
                 label="Name"
                 name="name"
