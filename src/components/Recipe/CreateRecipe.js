@@ -3,7 +3,7 @@ import { TextField, Button } from '@material-ui/core';
 
 import recipeHelper from '../../helpers/data/recipeData';
 
-const CreateRecipe = () => {
+const CreateRecipe = (props) => {
   const [recipeData, setRecipeData] = useState({});
   const [fieldValues, setFieldValues] = useState({ ingredient: '', method: '' });
   const formRef = useRef(null);
@@ -44,15 +44,17 @@ const CreateRecipe = () => {
     nameRef.current.focus();
     recipeHelper.addRecipeWithChildren(recipeData);
     setRecipeData({});
+    props.handleClose();
   };
 
   return (
   <div className="col-xl-4 col-lg-6 mb-4 mt-2">
         <div className="row no-gutters align-items-center">
           <div className="col mr-2">
+            {}
             <form className="user" ref={formRef} autoComplete="off" >
             <TextField
-                label="Name"
+                label="Recipe Name"
                 name="name"
                 fullWidth
                 margin="normal"
@@ -62,7 +64,7 @@ const CreateRecipe = () => {
                 autoFocus={true}
               />
               <TextField
-                label="Yield"
+                label="Recipe Yield"
                 name="servings"
                 fullWidth
                 margin="normal"
@@ -98,7 +100,10 @@ const CreateRecipe = () => {
                 {recipeData.method && recipeData.method.map((met, i) => <li key={i}>{met}</li>)}
               </ul>
               <hr className="dropdown-divider" />
-              <Button type="submit" onClick={handleSubmit} variant="contained" color="primary">Save Recipe</Button>
+              <div>
+                <Button type="reset" onClick={props.handleClose} variant="contained" color="secondary">Cancel</Button>
+                <Button style={{ textAlign: 'right' }} type="submit" onClick={handleSubmit} variant="contained" color="primary">Save Recipe</Button>
+              </div>
             </form>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   AppBar,
   Fab,
@@ -59,7 +59,7 @@ const App = (props) => {
         <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
         </div>
-        <AppBar position="fixed" color="primary" className={classes.appBar} >
+        <AppBar hidden={recipeIn} position="fixed" color="primary" className={classes.appBar} >
           <Toolbar>
             <IconButton
               edge="start"
@@ -99,7 +99,7 @@ const App = (props) => {
         </Fade>
         <Slide direction="up" in={recipeIn} mountOnEnter unmountOnExit>
           <Paper elevation={4} className={classes.paper}>
-            <CreateRecipe />
+            <CreateRecipe handleClose={() => setRecipeIn(!recipeIn)} />
           </Paper>
         </Slide>
       </div>
