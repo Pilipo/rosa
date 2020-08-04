@@ -59,7 +59,7 @@ const App = (props) => {
         <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
         </div>
-        <AppBar hidden={recipeIn} position="fixed" color="primary" className={classes.appBar} >
+        <AppBar position="fixed" color="primary" className={classes.appBar} >
           <Toolbar>
             <IconButton
               edge="start"
