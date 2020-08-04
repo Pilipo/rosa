@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   AppBar,
   Fab,
   IconButton,
   Toolbar,
   Typography,
+  Paper,
+  Fade,
+  Slide,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import ShoppingIcon from '@material-ui/icons/ShoppingBasket';
 import SearchIcon from '@material-ui/icons/Search';
@@ -15,17 +17,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import { withAuthentication, AuthUserContext } from '../Session';
 
-import LandingPage from '../Landing';
-import SignUpPage from '../SignUp';
-import SignInPage from '../SignIn';
-import RecipesPage from '../Recipes';
-import RecipePage from '../Recipe';
-import PasswordForgetPage from '../PasswordForget';
-import AccountPage from '../Account';
-import AdminPage from '../Admin';
-import * as ROUTES from '../../constants/routes';
-import Footer from '../Footer';
-import NavBar from '../NavBar';
+import CreateRecipe from '../Recipe/CreateRecipe';
 import MakeShoppingList from '../ShoppingList/MakeShoppingList';
 
 const App = (props) => {
@@ -34,7 +26,9 @@ const App = (props) => {
       padding: theme.spacing(2, 2, 0),
     },
     paper: {
-      paddingBottom: 50,
+      zIndex: 2,
+      position: 'relative',
+      margin: theme.spacing(1),
     },
     list: {
       marginBottom: theme.spacing(2),
@@ -58,34 +52,14 @@ const App = (props) => {
       margin: '0 auto',
     },
   }));
+  const [recipeIn, setRecipeIn] = useState(false);
   const classes = useStyles();
   return (
       <div id="wrapper" className="App vh-100">
         <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
-          <Router>
-            <div>
-              <AuthUserContext.Consumer>
-                {(authUser) => {
-                  if (authUser) {
-                    return (<>
-                      <Route exact path={ROUTES.LANDING} render={(appProps) => (<MakeShoppingList {...appProps} authUser={authUser} />)} />
-                      <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-                      <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-                      <Route path={ROUTES.RECIPES} component={RecipesPage} />
-                      <Route path={ROUTES.RECIPE} component={RecipePage} />
-                      <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
-                      <Route path={ROUTES.ACCOUNT} component={AccountPage} />
-                      <Route path={ROUTES.ADMIN} component={AdminPage} />
-                    </>);
-                  }
-                  return <></>;
-                }}
-              </AuthUserContext.Consumer>
-            </div>
-          </Router>
         </div>
-        <AppBar position="fixed" color="primary" className={classes.appBar} >
+        <AppBar hidden={recipeIn} position="fixed" color="primary" className={classes.appBar} >
           <Toolbar>
             <IconButton
               edge="start"
@@ -103,6 +77,7 @@ const App = (props) => {
               aria-label="add"
               className={classes.fabButton}
               onMouseDown={(e) => { e.preventDefault(); }}
+              onClick={() => setRecipeIn(!recipeIn)}
             >
               <AddIcon />
             </Fab>
@@ -115,6 +90,18 @@ const App = (props) => {
             </IconButton>
           </Toolbar>
         </AppBar>
+        <Fade in={!recipeIn} mountOnEnter unmountOnExit>
+          <Paper elevation={4} className={classes.paper}>
+          <AuthUserContext.Consumer>
+                {(authUser) => (authUser ? <MakeShoppingList authUser={authUser} /> : <div>Loading...</div>)}
+          </AuthUserContext.Consumer>
+          </Paper>
+        </Fade>
+        <Slide direction="up" in={recipeIn} mountOnEnter unmountOnExit>
+          <Paper elevation={4} className={classes.paper}>
+            <CreateRecipe />
+          </Paper>
+        </Slide>
         {/* <Footer /> */}
       </div>
     </div>
