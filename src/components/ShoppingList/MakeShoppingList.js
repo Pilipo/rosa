@@ -34,12 +34,7 @@ const MakeShoppingList = (props) => {
   };
 
   return (
-    <div className="col-xl-4 col-lg-6 mb-5">
-      {/* <form className="form-inline d-flex justify-content-center md-form form-sm active-cyan-2 mt-2 mb-2">
-        <input onChange={handleChange} className="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search"
-          aria-label="Search" />
-        <i className="fas fa-search" aria-hidden="true"></i>
-      </form> */}
+    <div className="col mb-5">
       <div className="row no-gutters align-items-center mb-5">
         <div className="col mr-2 mb-5">
           <div className="list-group list-group-flush">
