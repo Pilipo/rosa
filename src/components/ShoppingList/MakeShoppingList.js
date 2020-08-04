@@ -17,7 +17,7 @@ const MakeShoppingList = (props) => {
 
   useEffect(() => {
     listHelper.getList(props.authUser.uid)
-      .then((data) => setSelectedRecipes(data.recipes));
+      .then((data) => data && setSelectedRecipes(data.recipes));
   }, [props.authUser.uid]);
 
   const handleChange = (e) => {

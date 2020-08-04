@@ -11,11 +11,9 @@ const getList = (userId) => new Promise((resolve, reject) => {
 
 const setList = (userId, itemArray) => new Promise((resolve, reject) => {
   const obj = {
-    [userId]: {
-      recipes: itemArray,
-    },
+    recipes: itemArray,
   };
-  axios.put(`${baseUrl}/lists.json`, obj)
+  axios.put(`${baseUrl}/lists/${userId}.json`, obj)
     .then(({ data }) => resolve(data))
     .catch((err) => reject(err));
 });
