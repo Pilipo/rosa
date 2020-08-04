@@ -59,6 +59,7 @@ const CreateRecipe = () => {
                 onKeyDown={handleEnter}
                 onChange={handleChange}
                 ref={nameRef}
+                autoFocus={true}
               />
               <TextField
                 label="Yield"

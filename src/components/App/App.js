@@ -55,7 +55,7 @@ const App = (props) => {
   const [recipeIn, setRecipeIn] = useState(false);
   const classes = useStyles();
   return (
-      <div id="wrapper" className="App vh-100">
+      <div id="wrapper" className="App">
         <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
         </div>
@@ -102,7 +102,6 @@ const App = (props) => {
             <CreateRecipe />
           </Paper>
         </Slide>
-        {/* <Footer /> */}
       </div>
     </div>
   );
