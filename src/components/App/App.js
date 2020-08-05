@@ -5,7 +5,6 @@ import {
   Fab,
   IconButton,
   Toolbar,
-  Typography,
   Paper,
   Fade,
   Slide,
@@ -18,14 +17,11 @@ import {
   BottomNavigationAction,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import FolderIcon from '@material-ui/icons/Folder';
 import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import MenuIcon from '@material-ui/icons/Menu';
+import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
+import CalendarIcon from '@material-ui/icons/Today';
 import AddIcon from '@material-ui/icons/Add';
 import { withAuthentication, AuthUserContext } from '../Session';
 import CreateRecipe from '../Recipe/CreateRecipe';
@@ -39,6 +35,7 @@ const App = (props) => {
       position: 'fixed',
       zIndex: 3,
       borderTop: `${1}px #dddddd solid`,
+      height: `${75}px`,
     },
     text: {
       padding: theme.spacing(2, 2, 0),
@@ -62,8 +59,8 @@ const App = (props) => {
     },
     fabButton: {
       position: 'absolute',
-      zIndex: 1,
-      top: -46,
+      zIndex: 3,
+      bottom: 80,
       right: 12,
       margin: '0 auto',
     },
@@ -74,9 +71,12 @@ const App = (props) => {
   return (
       <div id="wrapper" className="App">
         <div id="content-wrapper" className="d-flex flex-column">
+          <AuthUserContext.Consumer>
+            {(authUser) => (authUser ? 'authed' : 'not authed')}
+          </AuthUserContext.Consumer>
         <AppBar hidden={recipeIn} position="sticky" color="white" className={classes.appBar} >
 
-          <Toolbar className="row">
+          <Toolbar>
             <IconButton
               className="col-4"
               color="inherit"
@@ -102,7 +102,7 @@ const App = (props) => {
         </AppBar>
         <Fab
               size="small"
-              color="secondary"
+              color="primary"
               aria-label="add"
               className={classes.fabButton}
               onMouseDown={(e) => { e.preventDefault(); }}
@@ -112,16 +112,15 @@ const App = (props) => {
             </Fab>
         <BottomNavigation className={classes.root}>
           <BottomNavigationAction label="Recents" value="recents" icon={<RestoreIcon />} />
-          <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon />} />
-          <BottomNavigationAction label="Nearby" value="nearby" icon={<LocationOnIcon />} />
-          <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
+          <BottomNavigationAction label="Calendar" value="calendar" icon={<CalendarIcon />} />
+          <BottomNavigationAction label="Search" value="search" icon={<SearchIcon />} />
         </BottomNavigation>
 
         <SwipeableDrawer anchor="top" open={showMenu} onClose={() => setShowMenu(false)}>
           <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
+            {['Profile', 'Integration', 'Logout'].map((text, index) => (
               <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemIcon>{index % 2 === 0 ? <SettingsIcon /> : <MailIcon />}</ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
             ))}
@@ -136,11 +135,11 @@ const App = (props) => {
           </Paper>
         </Fade>
 
-        <Slide direction="up" in={recipeIn} mountOnEnter unmountOnExit>
+        {/* <Slide direction="up" in={recipeIn} mountOnEnter unmountOnExit>
           <Paper elevation={4} className={classes.paper}>
             <CreateRecipe handleClose={() => setRecipeIn(!recipeIn)} />
           </Paper>
-        </Slide>
+        </Slide> */}
       </div>
     </div>
   );
