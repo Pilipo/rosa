@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Gravatar from 'react-gravatar';
 import {
   AppBar,
   Fab,
@@ -24,7 +25,6 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
-import ShoppingIcon from '@material-ui/icons/ShoppingBasket';
 import SearchIcon from '@material-ui/icons/Search';
 import AddIcon from '@material-ui/icons/Add';
 import { withAuthentication, AuthUserContext } from '../Session';
@@ -76,20 +76,31 @@ const App = (props) => {
         <div id="content-wrapper" className="d-flex flex-column">
         <AppBar hidden={recipeIn} position="sticky" color="white" className={classes.appBar} >
 
-          <Toolbar>
+          <Toolbar className="row">
             <IconButton
-              edge="start"
+              className="col-4"
               color="inherit"
               aria-label="open drawer"
               onMouseDown={(e) => { e.preventDefault(); }}
               onClick={() => setShowMenu(true)}
             >
-              <MenuIcon />
+              <AuthUserContext.Consumer>
+                {(authUser) => (authUser
+                  ? <Gravatar height={32} width={32} className="img-profile rounded-circle" alt="" email={authUser.email} />
+                  : <i className="w-100 text-center fas fa-lg fa-user-circle"></i>
+                )}
+              </AuthUserContext.Consumer>
             </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              Create List
-            </Typography>
-            <Fab
+            {/* <div className={classes.grow} /> */}
+            <div className="col-4">
+              <i className="w-100 text-center fas fa-2x text-primary fa-shopping-basket"></i>
+            </div>
+            {/* <IconButton className="col-4" color="inherit" onMouseDown={(e) => { e.preventDefault(); }}>
+              <SearchIcon />
+            </IconButton> */}
+          </Toolbar>
+        </AppBar>
+        <Fab
               size="small"
               color="secondary"
               aria-label="add"
@@ -99,16 +110,6 @@ const App = (props) => {
             >
               <AddIcon />
             </Fab>
-            <div className={classes.grow} />
-            <IconButton color="inherit" onMouseDown={(e) => { e.preventDefault(); }}>
-              <SearchIcon />
-            </IconButton>
-            <IconButton edge="end" color="inherit" onMouseDown={(e) => { e.preventDefault(); }}>
-              <ShoppingIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-
         <BottomNavigation className={classes.root}>
           <BottomNavigationAction label="Recents" value="recents" icon={<RestoreIcon />} />
           <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon />} />
@@ -116,7 +117,7 @@ const App = (props) => {
           <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
         </BottomNavigation>
 
-        <SwipeableDrawer anchor="bottom" open={showMenu} onClose={() => setShowMenu(false)}>
+        <SwipeableDrawer anchor="top" open={showMenu} onClose={() => setShowMenu(false)}>
           <List>
             {['All mail', 'Trash', 'Spam'].map((text, index) => (
               <ListItem button key={text}>
