@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { compose } from 'recompose';
 
 import { withFirebase } from '../Firebase';
-import * as ROUTES from '../../constants/routes';
 
-const SignInPage = () => (
+const SignInPage = (props) => (
   <div className="container">
     <div className="row justify-content-center">
       <div className="col-xl-10 col-lg-12 col-md-9">
@@ -18,14 +15,14 @@ const SignInPage = () => (
                   <div className="text-center">
                     <h1 className="h4 text-gray-900 mb-4">Welcome Back!</h1>
                   </div>
-                  <SignInForm />
+                  <SignInForm handleLogin={props.handleLogin} />
                   <hr />
-                  <div className="text-center">
-                    <Link className="small" to={ROUTES.PASSWORD_FORGET}>Forget your password?</Link>
+                  {/* <div className="text-center">
+                    <a href="/#" className="small" >Forget your password?</a>
                   </div>
                   <div className="text-center">
-                    <Link className="small" to={ROUTES.SIGN_UP}>Create an Account!</Link>
-                  </div>
+                    <a href="/#" className="small">Create an Account!</a>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -56,7 +53,7 @@ class SignInFormBase extends Component {
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.LANDING);
+        this.props.handleLogin();
       })
       .catch((error) => {
         this.setState({ error });
@@ -67,19 +64,6 @@ class SignInFormBase extends Component {
 
   onChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
-  };
-
-  handleGoogle = (e) => {
-    e.preventDefault();
-    this.props.firebase
-      .doGoogleAuth()
-      .then((result) => {
-        this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.LANDING);
-      })
-      .catch((error) => {
-        console.log({ error });
-      });
   };
 
   render() {
@@ -123,19 +107,12 @@ class SignInFormBase extends Component {
           Login
         </button>
         {error && <p>{error.message}</p>}
-        <hr />
-        <button onClick={this.handleGoogle} className="btn btn-google btn-user btn-block">
-          <i className="fab fa-google fa-fw"></i> Login with Google
-        </button>
       </form>
     );
   }
 }
 
-const SignInForm = compose(
-  withRouter,
-  withFirebase,
-)(SignInFormBase);
+const SignInForm = withFirebase(SignInFormBase);
 
 export default SignInPage;
 

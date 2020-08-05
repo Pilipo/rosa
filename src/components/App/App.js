@@ -18,11 +18,13 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import RestoreIcon from '@material-ui/icons/Restore';
-import MailIcon from '@material-ui/icons/Mail';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
 import CalendarIcon from '@material-ui/icons/Today';
 import AddIcon from '@material-ui/icons/Add';
+import BackIcon from '@material-ui/icons/ArrowBack';
+import ExitIcon from '@material-ui/icons/ExitToApp';
+import MergeIcon from '@material-ui/icons/MergeType';
 import { withAuthentication, AuthUserContext } from '../Session';
 import CreateRecipe from '../Recipe/CreateRecipe';
 import MakeShoppingList from '../ShoppingList/MakeShoppingList';
@@ -58,7 +60,7 @@ const App = (props) => {
       flexGrow: 1,
     },
     fabButton: {
-      position: 'absolute',
+      position: 'fixed',
       zIndex: 3,
       bottom: 80,
       right: 12,
@@ -67,14 +69,14 @@ const App = (props) => {
   }));
   const [recipeIn, setRecipeIn] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const handleLogOut = () => {
+    props.firebase.doSignOut();
+  };
   const classes = useStyles();
   return (
       <div id="wrapper" className="App">
         <div id="content-wrapper" className="d-flex flex-column">
-          <AuthUserContext.Consumer>
-            {(authUser) => (authUser ? 'authed' : 'not authed')}
-          </AuthUserContext.Consumer>
-        <AppBar hidden={recipeIn} position="sticky" color="white" className={classes.appBar} >
+        <AppBar hidden={recipeIn} position="sticky" color="default" className={classes.appBar} >
 
           <Toolbar>
             <IconButton
@@ -95,9 +97,6 @@ const App = (props) => {
             <div className="col-4">
               <i className="w-100 text-center fas fa-2x text-primary fa-shopping-basket"></i>
             </div>
-            {/* <IconButton className="col-4" color="inherit" onMouseDown={(e) => { e.preventDefault(); }}>
-              <SearchIcon />
-            </IconButton> */}
           </Toolbar>
         </AppBar>
         <Fab
@@ -108,7 +107,7 @@ const App = (props) => {
               onMouseDown={(e) => { e.preventDefault(); }}
               onClick={() => setRecipeIn(!recipeIn)}
             >
-              <AddIcon />
+              {recipeIn ? <BackIcon /> : <AddIcon />}
             </Fab>
         <BottomNavigation className={classes.root}>
           <BottomNavigationAction label="Recents" value="recents" icon={<RestoreIcon />} />
@@ -116,14 +115,20 @@ const App = (props) => {
           <BottomNavigationAction label="Search" value="search" icon={<SearchIcon />} />
         </BottomNavigation>
 
-        <SwipeableDrawer anchor="top" open={showMenu} onClose={() => setShowMenu(false)}>
+        <SwipeableDrawer anchor="top" open={showMenu} onOpen={() => {}} onClose={() => setShowMenu(false)}>
           <List>
-            {['Profile', 'Integration', 'Logout'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <SettingsIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+          <ListItem button key="Profile">
+              <ListItemIcon><SettingsIcon /></ListItemIcon>
+              <ListItemText primary="Profile" />
+            </ListItem>
+            <ListItem button key="Integration">
+              <ListItemIcon><MergeIcon /></ListItemIcon>
+              <ListItemText primary="Integration" />
+            </ListItem>
+            <ListItem button key="Logout" onClick={handleLogOut}>
+              <ListItemIcon><ExitIcon /></ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItem>
           </List>
         </SwipeableDrawer>
 
@@ -135,11 +140,11 @@ const App = (props) => {
           </Paper>
         </Fade>
 
-        {/* <Slide direction="up" in={recipeIn} mountOnEnter unmountOnExit>
+        <Slide direction="up" in={recipeIn} mountOnEnter unmountOnExit>
           <Paper elevation={4} className={classes.paper}>
             <CreateRecipe handleClose={() => setRecipeIn(!recipeIn)} />
           </Paper>
-        </Slide> */}
+        </Slide>
       </div>
     </div>
   );
