@@ -13,9 +13,14 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Divider,
+  BottomNavigation,
+  BottomNavigationAction,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import FolderIcon from '@material-ui/icons/Folder';
+import RestoreIcon from '@material-ui/icons/Restore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -28,6 +33,13 @@ import MakeShoppingList from '../ShoppingList/MakeShoppingList';
 
 const App = (props) => {
   const useStyles = makeStyles((theme) => ({
+    root: {
+      width: `${100}%`,
+      bottom: 0,
+      position: 'fixed',
+      zIndex: 3,
+      borderTop: `${1}px #dddddd solid`,
+    },
     text: {
       padding: theme.spacing(2, 2, 0),
     },
@@ -43,8 +55,7 @@ const App = (props) => {
       backgroundColor: theme.palette.background.paper,
     },
     appBar: {
-      top: 'auto',
-      bottom: 0,
+      top: 0,
     },
     grow: {
       flexGrow: 1,
@@ -52,9 +63,8 @@ const App = (props) => {
     fabButton: {
       position: 'absolute',
       zIndex: 1,
-      top: -30,
-      left: 0,
-      right: 0,
+      top: -46,
+      right: 12,
       margin: '0 auto',
     },
   }));
@@ -64,7 +74,8 @@ const App = (props) => {
   return (
       <div id="wrapper" className="App">
         <div id="content-wrapper" className="d-flex flex-column">
-        <AppBar hidden={recipeIn} position="fixed" color="primary" className={classes.appBar} >
+        <AppBar hidden={recipeIn} position="sticky" color="white" className={classes.appBar} >
+
           <Toolbar>
             <IconButton
               edge="start"
@@ -79,6 +90,7 @@ const App = (props) => {
               Create List
             </Typography>
             <Fab
+              size="small"
               color="secondary"
               aria-label="add"
               className={classes.fabButton}
@@ -96,7 +108,14 @@ const App = (props) => {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <div id="content">
+
+        <BottomNavigation className={classes.root}>
+          <BottomNavigationAction label="Recents" value="recents" icon={<RestoreIcon />} />
+          <BottomNavigationAction label="Favorites" value="favorites" icon={<FavoriteIcon />} />
+          <BottomNavigationAction label="Nearby" value="nearby" icon={<LocationOnIcon />} />
+          <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
+        </BottomNavigation>
+
         <SwipeableDrawer anchor="bottom" open={showMenu} onClose={() => setShowMenu(false)}>
           <List>
             {['All mail', 'Trash', 'Spam'].map((text, index) => (
@@ -107,7 +126,6 @@ const App = (props) => {
             ))}
           </List>
         </SwipeableDrawer>
-        </div>
 
         <Fade in={!recipeIn} mountOnEnter unmountOnExit>
           <Paper elevation={4} className={classes.paper}>
@@ -116,6 +134,7 @@ const App = (props) => {
           </AuthUserContext.Consumer>
           </Paper>
         </Fade>
+
         <Slide direction="up" in={recipeIn} mountOnEnter unmountOnExit>
           <Paper elevation={4} className={classes.paper}>
             <CreateRecipe handleClose={() => setRecipeIn(!recipeIn)} />
