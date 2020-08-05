@@ -18,6 +18,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+firebase_auth_keys.json
 config.sh
 
 npm-debug.log*

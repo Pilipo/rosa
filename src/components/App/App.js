@@ -110,9 +110,9 @@ const App = (props) => {
               {recipeIn ? <BackIcon /> : <AddIcon />}
             </Fab>
         <BottomNavigation className={classes.root}>
-          <BottomNavigationAction label="Recents" value="recents" icon={<RestoreIcon />} />
-          <BottomNavigationAction label="Calendar" value="calendar" icon={<CalendarIcon />} />
-          <BottomNavigationAction label="Search" value="search" icon={<SearchIcon />} />
+          <BottomNavigationAction disabled={true} label="Recents" value="recents" icon={<RestoreIcon />} />
+          <BottomNavigationAction disabled={true} label="Calendar" value="calendar" icon={<CalendarIcon />} />
+          <BottomNavigationAction disabled={true} label="Search" value="search" icon={<SearchIcon />} />
         </BottomNavigation>
 
         <SwipeableDrawer anchor="top" open={showMenu} onOpen={() => {}} onClose={() => setShowMenu(false)}>
@@ -133,7 +133,7 @@ const App = (props) => {
         </SwipeableDrawer>
 
         <Fade in={!recipeIn} mountOnEnter unmountOnExit>
-          <Paper elevation={4} className={classes.paper}>
+          <Paper elevation={0} className={classes.paper}>
           <AuthUserContext.Consumer>
             {(authUser) => (authUser ? <MakeShoppingList authUser={authUser} /> : <div>Loading...</div>)}
           </AuthUserContext.Consumer>
@@ -141,7 +141,7 @@ const App = (props) => {
         </Fade>
 
         <Slide direction="up" in={recipeIn} mountOnEnter unmountOnExit>
-          <Paper elevation={4} className={classes.paper}>
+          <Paper elevation={0} className={classes.paper}>
             <CreateRecipe handleClose={() => setRecipeIn(!recipeIn)} />
           </Paper>
         </Slide>
