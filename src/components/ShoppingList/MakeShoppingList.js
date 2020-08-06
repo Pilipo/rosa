@@ -76,7 +76,6 @@ const MakeShoppingList = (props) => {
   }));
 
   const classes = useStyles();
-
   return (
     <div className={classes.wrapper}>
       {props.showSearch
@@ -97,7 +96,7 @@ const MakeShoppingList = (props) => {
           {searchPhrase ? <BackspaceIcon /> : <SearchIcon />}
         </IconButton>
         </Paper>}
-    {recipes ? (
+    {recipes.length ? (
       recipes.map((recipe) => (
         <Card className={classes.root}
           key={recipe.id}
@@ -123,7 +122,14 @@ const MakeShoppingList = (props) => {
             </ToggleButton>
           </div>
         </Card>
-      ))) : 'loading...'}
+      )))
+      : <Card className={classes.root}>
+          <CardContent className={classes.content}>
+            <div>No recipes found</div>
+            <small className="ml-2">Why don't you {searchPhrase ? 'clear your search?' : 'create a new one?'}</small>
+          </CardContent>
+        </Card>
+      }
       </div>
   );
 };
