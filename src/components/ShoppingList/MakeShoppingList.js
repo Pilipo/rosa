@@ -45,6 +45,10 @@ const MakeShoppingList = (props) => {
       display: 'flex',
       marginBottom: 6,
     },
+    wrapper: {
+      marginBottom: 80,
+      marginTop: 80,
+    },
     content: {
       flex: '1 0 auto',
     },
@@ -66,7 +70,7 @@ const MakeShoppingList = (props) => {
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes.wrapper}>
     {recipes ? (
       recipes.map((recipe) => (
         <Card className={classes.root}

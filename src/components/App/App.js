@@ -7,7 +7,6 @@ import {
   Toolbar,
   Paper,
   Fade,
-  Slide,
   SwipeableDrawer,
   List,
   ListItem,
@@ -74,9 +73,8 @@ const App = (props) => {
   };
   const classes = useStyles();
   return (
-      <div id="wrapper" className="App">
-        <div id="content-wrapper" className="d-flex flex-column">
-        <AppBar hidden={recipeIn} position="sticky" color="default" className={classes.appBar} >
+    <>
+    <AppBar hidden={recipeIn} position="fixed" color="default" className={classes.appBar} >
 
           <Toolbar>
             <IconButton
@@ -140,13 +138,12 @@ const App = (props) => {
           </Paper>
         </Fade>
 
-        <Slide direction="up" in={recipeIn} mountOnEnter unmountOnExit>
+        <Fade in={recipeIn} mountOnEnter unmountOnExit>
           <Paper elevation={0} className={classes.paper}>
             <CreateRecipe handleClose={() => setRecipeIn(!recipeIn)} />
           </Paper>
-        </Slide>
-      </div>
-    </div>
+        </Fade>
+        </>
   );
 };
 
