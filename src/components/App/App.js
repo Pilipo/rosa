@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Gravatar from 'react-gravatar';
 import {
   AppBar,
-  Fab,
   IconButton,
   Toolbar,
   Paper,
@@ -16,11 +15,10 @@ import {
   BottomNavigationAction,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import RestoreIcon from '@material-ui/icons/Restore';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
-import CalendarIcon from '@material-ui/icons/Today';
-import AddIcon from '@material-ui/icons/Add';
+ import AddIcon from '@material-ui/icons/Add';
+import NewListIcon from '@material-ui/icons/CreateNewFolder';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import MergeIcon from '@material-ui/icons/MergeType';
@@ -68,6 +66,7 @@ const App = (props) => {
   }));
   const [recipeIn, setRecipeIn] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const handleLogOut = () => {
     props.firebase.doSignOut();
   };
@@ -97,20 +96,26 @@ const App = (props) => {
             </div>
           </Toolbar>
         </AppBar>
-        <Fab
-              size="small"
-              color="primary"
-              aria-label="add"
-              className={classes.fabButton}
-              onMouseDown={(e) => { e.preventDefault(); }}
-              onClick={() => setRecipeIn(!recipeIn)}
-            >
-              {recipeIn ? <BackIcon /> : <AddIcon />}
-            </Fab>
-        <BottomNavigation className={classes.root}>
-          <BottomNavigationAction disabled={true} label="Recents" value="recents" icon={<RestoreIcon />} />
-          <BottomNavigationAction disabled={true} label="Calendar" value="calendar" icon={<CalendarIcon />} />
-          <BottomNavigationAction disabled={true} label="Search" value="search" icon={<SearchIcon />} />
+        <BottomNavigation showLabels={true} className={classes.root}>
+          <BottomNavigationAction
+            label="Search"
+            value="search"
+            icon={<SearchIcon/>}
+            onClick={() => {
+              setShowSearch(!showSearch);
+              window.scrollTo(0, 0);
+            }}
+            onMouseDown={(e) => { e.preventDefault(); }}
+          />
+          <BottomNavigationAction
+            label="New Recipe"
+            value="add"
+            icon={recipeIn ? <BackIcon /> : <AddIcon />}
+            onClick={() => setRecipeIn(!recipeIn)}
+            onMouseDown={(e) => { e.preventDefault(); }}
+          />
+          <BottomNavigationAction disabled={true} label="New Shopping List" value="list" icon={<NewListIcon />} />
+          {/* <BottomNavigationAction disabled={true} label="Calendar" value="calendar" icon={<CalendarIcon />} /> */}
         </BottomNavigation>
 
         <SwipeableDrawer anchor="top" open={showMenu} onOpen={() => {}} onClose={() => setShowMenu(false)}>
@@ -133,7 +138,7 @@ const App = (props) => {
         <Fade in={!recipeIn} mountOnEnter unmountOnExit>
           <Paper elevation={0} className={classes.paper}>
           <AuthUserContext.Consumer>
-            {(authUser) => (authUser ? <MakeShoppingList authUser={authUser} /> : <div>Loading...</div>)}
+            {(authUser) => <MakeShoppingList showSearch={showSearch} authUser={authUser} />}
           </AuthUserContext.Consumer>
           </Paper>
         </Fade>

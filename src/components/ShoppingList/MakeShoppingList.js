@@ -4,7 +4,12 @@ import {
   CardMedia,
   CardContent,
   makeStyles,
+  InputBase,
+  Paper,
+  IconButton,
 } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
+import BackspaceIcon from '@material-ui/icons/Backspace';
 import { ToggleButton } from '@material-ui/lab';
 import CheckIcon from '@material-ui/icons/Check';
 import recipeHelper from '../../helpers/data/recipeData';
@@ -46,8 +51,8 @@ const MakeShoppingList = (props) => {
       marginBottom: 6,
     },
     wrapper: {
-      marginBottom: 80,
-      marginTop: 80,
+      marginBottom: 86,
+      marginTop: 66,
     },
     content: {
       flex: '1 0 auto',
@@ -61,9 +66,12 @@ const MakeShoppingList = (props) => {
       paddingLeft: theme.spacing(1),
       paddingBottom: theme.spacing(1),
     },
-    playIcon: {
-      height: 38,
-      width: 38,
+    input: {
+      marginLeft: theme.spacing(1),
+      flex: 1,
+    },
+    iconButton: {
+      padding: 10,
     },
   }));
 
@@ -71,6 +79,24 @@ const MakeShoppingList = (props) => {
 
   return (
     <div className={classes.wrapper}>
+      {props.showSearch
+      && <Paper component="form" className={classes.root}>
+        <InputBase
+          className={classes.input}
+          placeholder="Search Recipes"
+          inputProps={{ 'aria-label': 'search recipes' }}
+          onChange={handleChange}
+          value={searchPhrase}
+          autoFocus
+        />
+        <IconButton
+          className={classes.iconButton}
+          onClick={() => setSearchPhrase('')}
+          onMouseDown={(e) => { e.preventDefault(); }}
+        >
+          {searchPhrase ? <BackspaceIcon /> : <SearchIcon />}
+        </IconButton>
+        </Paper>}
     {recipes ? (
       recipes.map((recipe) => (
         <Card className={classes.root}
@@ -87,7 +113,7 @@ const MakeShoppingList = (props) => {
             <small className="ml-2">{recipe.servings}</small>
           </CardContent>
           </div>
-          <div className="col-2 align-items-center block">
+          <div className="col-2 align-items-center d-flex">
             <ToggleButton
               onChange={(e) => handleClick(recipe, e)}
               selected={ selectedRecipes.filter((rec) => rec.name === recipe.name).length > 0 }
@@ -100,29 +126,6 @@ const MakeShoppingList = (props) => {
       ))) : 'loading...'}
       </div>
   );
-
-  // return (
-  //   <div className="col mb-5">
-  //     <div className="row no-gutters align-items-center mb-5">
-  //       <div className="col mr-2 mb-5">
-  //         <div className="list-group list-group-flush">
-  //           {recipes ? (
-  //             recipes.map((recipe) => (
-  //                 <button
-  //                   key={recipe.id}
-  //                   className={`list-group-item list-group-item-action ${selectedRecipes.filter((rec) => rec.name === recipe.name).length > 0 ? 'active' : ''}`}
-  //                   onClick={(e) => handleClick(recipe, e)}
-  //                   onMouseDown={(e) => { e.preventDefault(); }}
-  //                 >
-  //                   <div>{recipe.name}</div>
-  //                   <small className="ml-2">{recipe.servings}</small>
-  //                 </button>
-  //             ))) : 'loading...'}
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 };
 
 export default MakeShoppingList;
