@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-
 import { withFirebase } from '../Firebase';
+
+import './index.scss';
 
 const SignInPage = (props) => (
   <div className="container">

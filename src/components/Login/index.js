@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import './index.scss';
 
 const LoginView = ({ onClick }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   return (
+    <div className="signin vh-100">
     <form className="form-signin">
       <div className="text-center mb-4">
         <i className="fas fa-4x text-primary fa-shopping-basket"></i>
@@ -26,6 +28,7 @@ const LoginView = ({ onClick }) => {
       }}
       className="btn btn-lg btn-danger btn-block"><i className="fab fa-google-plus"></i> Google</button>
     </form>
+    </div>
   );
 };
 

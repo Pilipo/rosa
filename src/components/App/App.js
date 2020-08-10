@@ -6,7 +6,6 @@ import apiKeys from '../../helpers/apiKeys';
 import LoginView from '../Login';
 import LogoutView from '../Logout';
 import NavBar from '../NavBar';
-import './index.scss';
 
 firebase.initializeApp(apiKeys);
 
