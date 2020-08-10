@@ -2,7 +2,6 @@ import listHelper from '../../helpers/data/listData';
 
 class ShoppingList {
   constructor(userObj) {
-    console.log('user', userObj);
     this.list = [];
     this.userObj = userObj;
     userObj && this.get();

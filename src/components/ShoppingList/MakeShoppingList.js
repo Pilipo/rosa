@@ -37,7 +37,6 @@ const MakeShoppingList = (props) => {
       <div component="form">
         <input
           placeholder="Search Recipes"
-          inputProps={{ 'aria-label': 'search recipes' }}
           onChange={handleChange}
           value={searchPhrase}
           autoFocus
