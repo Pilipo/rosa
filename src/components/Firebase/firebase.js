@@ -19,11 +19,18 @@ class Firebase {
 
   doSignInWithEmailAndPassword = (email, password) => this.auth.signInWithEmailAndPassword(email, password);
 
+  doSignInWithGoogle = () => {
+    const googleProvider = new app.auth.GoogleAuthProvider();
+    this.auth.signInWithRedirect(googleProvider);
+  }
+
   doSignOut = () => this.auth.signOut();
 
   doPasswordReset = (email) => this.auth.sendPasswordResetEmail(email);
 
   doPasswordUpdate = (password) => this.auth.currentUser.updatePassword(password);
+
+  makeToken = () => this.auth.getIdToken();
 }
 
 export default Firebase;

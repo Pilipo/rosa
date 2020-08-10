@@ -17,7 +17,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
- import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@material-ui/icons/Add';
 import NewListIcon from '@material-ui/icons/CreateNewFolder';
 import BackIcon from '@material-ui/icons/ArrowBack';
 import ExitIcon from '@material-ui/icons/ExitToApp';

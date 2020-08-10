@@ -44,6 +44,13 @@ class SignInFormBase extends Component {
     super(props);
 
     this.state = { ...INITIAL_STATE };
+    this.handleGoogle = this.handleGoogle.bind(this);
+  }
+
+  handleGoogle = () => {
+    this.props.firebase
+      .doSignInWithGoogle()
+      .catch((error) => this.setState({ error }));
   }
 
   onSubmit = (event) => {
@@ -105,6 +112,10 @@ class SignInFormBase extends Component {
         </div>
         <button disabled={isInvalid} className="btn btn-primary btn-user btn-block" type="submit">
           Login
+        </button>
+        <hr />
+        <button onClick={this.handleGoogle} className="btn btn-primary btn-user btn-block" type="reset">
+          Google Auth??
         </button>
         {error && <p>{error.message}</p>}
       </form>

@@ -22,6 +22,7 @@ const withAuthentication = (Component) => {
       };
       this.loadingBuffer = null;
       this.handleLogin = this.handleLogin.bind(this);
+      this.handleGoogle = this.handleGoogle.bind(this);
       this.handleForgottenPassword = this.handleForgottenPassword.bind(this);
       this.handleCreateAccount = this.handleCreateAccount.bind(this);
     }
@@ -46,6 +47,11 @@ const withAuthentication = (Component) => {
       this.setState({
         loading: true,
       });
+    }
+
+    handleGoogle() {
+      console.log('handling google');
+      // this.props.firebase.doSignInWithGoogle();
     }
 
     handleForgottenPassword() {
@@ -75,6 +81,7 @@ const withAuthentication = (Component) => {
 
       return <SignIn handles={{
         login: this.handleLogin,
+        googleLogin: this.handleGoogle,
         forgottenPassword: this.handleForgottenPassword,
         createAccount: this.handleCreateAccount,
       }} />;
