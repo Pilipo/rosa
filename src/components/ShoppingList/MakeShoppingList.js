@@ -1,17 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  makeStyles,
-  InputBase,
-  Paper,
-  IconButton,
-} from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
-import BackspaceIcon from '@material-ui/icons/Backspace';
-import { ToggleButton } from '@material-ui/lab';
-import CheckIcon from '@material-ui/icons/Check';
 import recipeHelper from '../../helpers/data/recipeData';
 import listHelper from '../../helpers/data/listData';
 import './index.scss';
@@ -45,90 +32,53 @@ const MakeShoppingList = (props) => {
     e.preventDefault();
   };
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      display: 'flex',
-      marginBottom: 6,
-    },
-    wrapper: {
-      marginBottom: 86,
-      marginTop: 66,
-    },
-    content: {
-      flex: '1 0 auto',
-    },
-    cover: {
-      width: 88,
-    },
-    controls: {
-      display: 'flex',
-      alignItems: 'center',
-      paddingLeft: theme.spacing(1),
-      paddingBottom: theme.spacing(1),
-    },
-    input: {
-      marginLeft: theme.spacing(1),
-      flex: 1,
-    },
-    iconButton: {
-      padding: 10,
-    },
-  }));
-
-  const classes = useStyles();
   return (
-    <div className={classes.wrapper}>
-      {props.showSearch
-      && <Paper component="form" className={classes.root}>
-        <InputBase
-          className={classes.input}
+    <div>
+      <div component="form">
+        <input
           placeholder="Search Recipes"
           inputProps={{ 'aria-label': 'search recipes' }}
           onChange={handleChange}
           value={searchPhrase}
           autoFocus
         />
-        <IconButton
-          className={classes.iconButton}
+        <i
           onClick={() => setSearchPhrase('')}
           onMouseDown={(e) => { e.preventDefault(); }}
+          className="fas fa-search"
         >
-          {searchPhrase ? <BackspaceIcon /> : <SearchIcon />}
-        </IconButton>
-        </Paper>}
+        </i>
+      </div>
     {recipes.length ? (
       recipes.map((recipe) => (
-        <Card className={classes.root}
+        <div
+          className="card"
           key={recipe.id}
         >
-          <CardMedia
-            className={classes.cover}
+          <div
+            className="card-img-left"
             image="http://via.placeholder.com/88.png"
             title="Live from space album cover"
           />
           <div className="col-7">
-          <CardContent className={classes.content}>
             <div>{recipe.name}</div>
             <small className="ml-2">{recipe.servings}</small>
-          </CardContent>
           </div>
           <div className="col-2 align-items-center d-flex">
-            <ToggleButton
+            <button
               onChange={(e) => handleClick(recipe, e)}
               selected={ selectedRecipes.filter((rec) => rec.name === recipe.name).length > 0 }
               value="check"
             >
-              <CheckIcon />
-            </ToggleButton>
+              <i className="fas fa-check"></i>
+            </button>
           </div>
-        </Card>
+        </div>
       )))
-      : <Card className={classes.root}>
-          <CardContent className={classes.content}>
+      : <div className="card">
             <div>No recipes found</div>
             <small className="ml-2">Why don't you {searchPhrase ? 'clear your search?' : 'create a new one?'}</small>
-          </CardContent>
-        </Card>
+        </div>
       }
       </div>
   );
