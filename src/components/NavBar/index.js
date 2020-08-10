@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import Gravatar from 'react-gravatar';
+import './index.scss';
 
 const NavBar = ({ context }) => {
   const user = useContext(context);
   return (
-  <nav className="navbar navbar-light bg-white topbar mb-4 static-top shadow navbar-fixed-top">
+  <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow navbar-fixed-top">
     <a href="/" className="sidebar-brand d-flex align-items-center justify-content-center">
       <div className="sidebar-brand-icon rotate-n-15">
         <i className="fas fa-2x fa-shopping-basket"></i>
