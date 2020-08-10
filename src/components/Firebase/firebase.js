@@ -19,9 +19,10 @@ class Firebase {
 
   doSignInWithEmailAndPassword = (email, password) => this.auth.signInWithEmailAndPassword(email, password);
 
+  // VVV Here is the reported issue.
   doSignInWithGoogle = () => {
     const googleProvider = new app.auth.GoogleAuthProvider();
-    this.auth.signInWithRedirect(googleProvider);
+    this.auth.signInWithPopup(googleProvider);
   }
 
   doSignOut = () => this.auth.signOut();
