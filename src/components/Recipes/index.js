@@ -1,106 +1,83 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Modal } from 'react-bootstrap';
+import React, { useState, useEffect, useContext } from 'react';
+import recipeHelper from '../../helpers/data/recipeData';
+import listHelper from '../../helpers/data/listData';
+import './index.scss';
 
-import { withFirebase } from '../Firebase';
-import recipeData from '../../helpers/data/recipeData';
-import RecipeTitleForm from '../Recipe/RecipeForm';
+const Recipes = ({ context }) => {
+  const user = useContext(context);
+  const [recipes, setRecipes] = useState([]);
+  const [selectedRecipes, setSelectedRecipes] = useState([]);
+  const [searchPhrase, setSearchPhrase] = useState('');
 
-class RecipesPage extends Component {
-  constructor(props) {
-    super(props);
+  useEffect(() => {
+    recipeHelper.getRecipes(searchPhrase)
+      .then((data) => setRecipes(data));
+    selectedRecipes.length > 0 && listHelper.setList(user.id, selectedRecipes);
+  }, [searchPhrase, user.id, selectedRecipes]);
 
-    this.state = {
-      loading: false,
-      recipes: [],
-      selectedRecipesIds: [],
-    };
+  useEffect(() => {
+    listHelper.getList(user.id)
+      .then((data) => data && setSelectedRecipes(data.recipes));
+  }, [user.id]);
 
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleCheck = this.handleCheck.bind(this);
-  }
+  const handleChange = (e) => {
+    setSearchPhrase(e.target.value);
+  };
 
-  componentDidMount() {
-    this.setState({ loading: true });
-    this.props.firebase.auth.onAuthStateChanged((user) => this.handleRefresh());
-  }
-
-  handleRefresh() {
-    Promise.all([
-      recipeData.getRecipes(),
-      this.props.firebase.shoppingList.get(),
-    ])
-      .then((data) => {
-        const newRecipes = data[0].map((recipe) => {
-          const newRecipe = recipe;
-          newRecipe.inList = false;
-          if (data[1] && data[1].recipes.indexOf(newRecipe.id) !== -1) newRecipe.inList = true;
-          return newRecipe;
-        });
-        this.setState({
-          loading: false,
-          recipes: newRecipes,
-          selectedRecipesIds: data[1],
-        });
-      });
-  }
-
-  handleDelete(recipeId) {
-    recipeData.deleteRecipe(recipeId)
-      .then(() => this.handleRefresh());
-  }
-
-  handleCheck(evt) {
-    if (evt.target.checked) {
-      this.props.firebase.shoppingList.add(this.props.firebase.auth.currentUser.uid, evt.target.name)
-        .then(() => this.handleRefresh());
+  const handleClick = (recipe, e) => {
+    e.preventDefault();
+    if (selectedRecipes.filter((selectedRecipe) => selectedRecipe.name === recipe.name).length) {
+      setSelectedRecipes(selectedRecipes.filter((selectedRecipe) => selectedRecipe.name !== recipe.name));
     } else {
-      this.props.firebase.shoppingList.delete(this.props.firebase.auth.currentUser.uid, evt.target.name)
-        .then(() => this.handleRefresh());
+      setSelectedRecipes([...selectedRecipes, recipe]);
     }
-  }
+  };
 
-  render() {
-    const { recipes, loading } = this.state;
+  const isRecipeSelected = (recipeName) => (selectedRecipes.filter((rec) => rec.name === recipeName).length > 0);
 
-    const handleClick = () => this.setState({ show: true });
-    const handleClose = () => this.setState({ show: false });
+  const noRecipeContent = () => (
+    <div className="card">
+      <div>No recipes found</div>
+      <small className="ml-2">Why don't you {searchPhrase ? 'clear your search?' : 'create a new one?'}</small>
+    </div>
+  );
 
+  if (recipes.length) {
     return (
-        <div>
-          <h1>
-            Recipes
-            <Button onClick={handleClick} variant="primary" size="sm" className="ml-2 rounded-circle text-right"><i className="fas fa-plus">Add New</i></Button>
-          </h1>
-
-          {loading && <div>Loading ...</div>}
-
-          {recipes && <RecipeList recipes={recipes} handleDelete={this.handleDelete} handleCheck={this.handleCheck} />}
-
-          <Modal show={this.state.show} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title id="contained-modal-title-vcenter">Add Recipe</Modal.Title>
-            </Modal.Header>
-            <Modal.Body><RecipeTitleForm /></Modal.Body>
-          </Modal>
-
+      <div>
+        <div component="form">
+          <input placeholder="Search Recipes" onChange={handleChange} value={searchPhrase} autoFocus />
+          <i onClick={() => setSearchPhrase('')} onMouseDown={(e) => { e.preventDefault(); }} className="fas fa-search" ></i>
         </div>
+        {recipes.map((recipe) => (
+          <div className="card m-1" key={recipe.id} >
+            <div className="row no-gutters">
+              <div className="col-3">
+                <img className="card-img" src="http://via.placeholder.com/88.png" alt="food shot" />
+              </div>
+              <div className="col-7">
+                <div className="card-body">
+                  <h5 className="card-title">{recipe.name}</h5>
+                  <small className="ml-2">{recipe.servings}</small>
+                </div>
+              </div>
+              <div className="col-2 align-items-center d-flex">
+                <button
+                  onClick={(e) => handleClick(recipe, e)}
+                  className={`btn ${isRecipeSelected(recipe.name) ? 'btn-success' : 'btn-secondary'}`}
+                >
+                  <i className="fas fa-check"></i>
+                </button>
+              </div>
+
+          </div>
+        </div>
+        ))}
+      </div>
     );
   }
-}
 
-const RecipeList = ({ recipes, handleDelete, handleCheck }) => (
-  <div className="list-group list-group-flush">
-    {recipes.map((recipe) => (
-    <div key={recipe.id} className="list-group-item list-group-item-action">
-      <div className="row">
-        <input className="col-1" name={recipe.id} type="checkbox" checked={recipe.inList} onChange={(e) => handleCheck(e, recipe.id)}></input>
-        <Link className="col-9" to={`/recipe/${recipe.id}`}>{recipe.name} </Link>
-        <button className="col-2 text-center" onClick={() => handleDelete(recipe.id)}>Delete</button>
-      </div>
-    </div>
-    ))}
-  </div>
-);
+  return noRecipeContent();
+};
 
-export default withFirebase(RecipesPage);
+export default Recipes;

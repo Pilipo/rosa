@@ -4,8 +4,9 @@ import 'firebase/auth';
 import apiKeys from '../../helpers/apiKeys';
 
 import LoginView from '../Login';
-import LogoutView from '../Logout';
 import NavBar from '../NavBar';
+import Recipes from '../Recipes';
+import './index.scss';
 
 firebase.initializeApp(apiKeys);
 
@@ -16,7 +17,7 @@ const UserProvider = UserContext.Provider;
 const onAuthStateChange = (callback) => {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      callback({ loggedIn: true, email: user.email });
+      callback({ loggedIn: true, email: user.email, id: user.uid });
     } else {
       callback({ loggedIn: false });
     }
@@ -57,19 +58,16 @@ const App = (props) => {
     logout();
   }, []);
 
-  const handleLogOut = () => {
-    props.firebase.doSignOut();
-  };
-
   if (!user.loggedIn) {
     return <LoginView onClick={requestLogin} />;
   }
 
   return (
     <UserProvider value={user}>
-      {/* make this a nav bar (top and bottom) */}
       <NavBar onClick={requestLogout} context={UserContext} />
-      {/* <LogoutView context={UserContext} /> */}
+      <div className="content-holder">
+        <Recipes context={UserContext} />
+      </div>
     </UserProvider>
   );
 
