@@ -5,6 +5,7 @@ import apiKeys from '../../helpers/apiKeys';
 
 import LoginView from '../Login';
 import NavBar from '../NavBar';
+import Appbar from '../Appbar';
 import Recipes from '../Recipes';
 import './index.scss';
 
@@ -65,6 +66,7 @@ const App = (props) => {
   return (
     <UserProvider value={user}>
       <NavBar onClick={requestLogout} context={UserContext} />
+      <Appbar />
       <div className="content-holder">
         <Recipes context={UserContext} />
       </div>

@@ -45,10 +45,11 @@ const Recipes = ({ context }) => {
   if (recipes.length) {
     return (
       <div>
-        <div component="form">
-          <input placeholder="Search Recipes" onChange={handleChange} value={searchPhrase} autoFocus />
-          <i onClick={() => setSearchPhrase('')} onMouseDown={(e) => { e.preventDefault(); }} className="fas fa-search" ></i>
-        </div>
+        <form className="form-inline d-flex justify-content-center md-form form-sm active-purple active-purple-2 mt-2">
+          <input className="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search Recipes"
+            aria-label="Search" onChange={handleChange} value={searchPhrase} autoFocus />
+          <i onClick={() => setSearchPhrase('')} onMouseDown={(e) => { e.preventDefault(); }} className="ml-3 fas fa-search" aria-hidden="true"></i>
+        </form>
         {recipes.map((recipe) => (
           <div className="card m-1" key={recipe.id} >
             <div className="row no-gutters">
