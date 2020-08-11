@@ -10,7 +10,6 @@ const NavBar = ({ context, onClick }) => {
       <div className="sidebar-brand-icon rotate-n-15">
         <i className="fas fa-2x fa-shopping-basket"></i>
       </div>
-      <div className="sidebar-brand-text text-capitalize mx-3">{process.env.REACT_APP_NAME}<span className="text-gray-500"> {process.env.REACT_APP_VERSION}</span></div>
     </a>
 
     <ul className="navbar-nav ml-auto">
@@ -22,6 +21,7 @@ const NavBar = ({ context, onClick }) => {
           <Gravatar className="img-profile rounded-circle" alt="" email={user.email} />
         </a>
         <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+          <button className="dropdown-item" ><i className="fas fa-info-circle fa-sm fa-fw mr-2 text-gray-400"></i>About</button>
           <button onClick={onClick} className="dropdown-item" ><i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Logout</button>
         </div>
       </li>

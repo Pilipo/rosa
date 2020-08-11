@@ -1,3 +1,11 @@
 .navbar-expand {
   position: absolute;
 }
+
+.rotate-n-15 {
+  transform: rotate(-15deg);
+  -ms-transform: rotate(-15deg);
+  -moz-transform: rotate(-15deg);
+  -webkit-transform: rotate(-15deg);
+  -o-transform: rotate(-15deg);
+}
