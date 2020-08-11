@@ -42,7 +42,6 @@ const logout = () => {
 const App = (props) => {
   const [user, setUser] = useState({ loggedIn: false });
   const [recipeIn, setRecipeIn] = useState(false);
-  const [showMenu, setShowMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
 
   useEffect(() => {

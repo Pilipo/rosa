@@ -1,12 +1,32 @@
 import React, { useState, useRef } from 'react';
 
 import recipeHelper from '../../helpers/data/recipeData';
+import './recipe.scss';
+
+const groceryAisle = [
+  'produce',
+  'bakery',
+  'deli',
+  'butcher',
+  'dairy',
+  'frozen',
+  'canned',
+  'baking',
+  'pasta/rice',
+  'sauces/oils',
+  'condiments',
+  'spices',
+  'snacks',
+  'other',
+];
 
 const CreateRecipe = ({ onClick }) => {
   const [recipeData, setRecipeData] = useState({});
-  const [fieldValues, setFieldValues] = useState({ ingredient: '', method: '' });
+  const [fieldValues, setFieldValues] = useState({ ingredient: '', section: '', method: '' });
+  const [section, setSection] = useState('');
   const formRef = useRef(null);
   const nameRef = useRef(null);
+  let ingredientRef = useRef(null);
 
   const handleEnter = (event) => {
     if (event.keyCode === 13) {
@@ -30,7 +50,11 @@ const CreateRecipe = ({ onClick }) => {
     if (event.keyCode === 13) {
       const { name, value } = event.target;
       const currentValueArr = recipeData[name] || [];
-      currentValueArr.push(value);
+      if (name === 'ingredient') {
+        currentValueArr.push([value, section]);
+      } else {
+        currentValueArr.push(value);
+      }
       setRecipeData({ ...recipeData, [name]: currentValueArr });
       setFieldValues({ ...fieldValues, [name]: '' });
       event.preventDefault();
@@ -77,25 +101,39 @@ const CreateRecipe = ({ onClick }) => {
                   aria-describedby="material-addon1"
                   onKeyDown={handleEnter}
                   onChange={handleChange}
-                  ref={nameRef}
                 />
             </div>
 
               <hr />
-              <div className="md-form mb-3">
+              <div className="md-form input-group mb-3">
+                <button
+                  className="form-control btn btn-secondary dropdown-toggle w-40"
+                  type="button"
+                  name="section"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  onClick={handleChange}
+                >
+                  {section || 'Grocery Aisle'}
+                </button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  {groceryAisle.map((s, index) => (
+                    <button onClick={(e) => { e.preventDefault(); setSection(s); ingredientRef.focus(); }} className="btn dropdown-item" key={index} value={s}>{s}</button>
+                  ))}
+                </div>
                 <input
-                    type="text"
-                    name="ingredient"
-                    className="form-control"
-                    placeholder="Ingredient"
-                    aria-label="Ingredient"
-                    aria-describedby="material-addon1"
-                    onKeyDown={handleChildEnter}
-                    onChange={handleChange}
-                    ref={nameRef}
-                    value={fieldValues.ingredient}
-                  />
-                <small className="pl-2 text-muted">[return] to save and add another</small>
+                  type="text"
+                  name="ingredient"
+                  className="form-control w-60"
+                  placeholder="Ingredient"
+                  aria-label="Ingredient"
+                  aria-describedby="material-addon1"
+                  onKeyDown={handleChildEnter}
+                  onChange={handleChange}
+                  value={fieldValues.ingredient}
+                  ref={(input) => { ingredientRef = input; }}
+                />
               </div>
               <ul>
               {recipeData.ingredient && recipeData.ingredient.map((ing, i) => <li key={i}>{ing}</li>)}
@@ -109,17 +147,19 @@ const CreateRecipe = ({ onClick }) => {
                   aria-describedby="material-addon1"
                   onKeyDown={handleChildEnter}
                   onChange={handleChange}
-                  ref={nameRef}
                   value={fieldValues.method}
                   />
-              <small className="pl-2 text-muted">[return] to save and add another</small>
               <ul>
                 {recipeData.method && recipeData.method.map((met, i) => <li key={i}>{met}</li>)}
               </ul>
               <hr className="dropdown-divider" />
-              <div>
-                <button className="btn btn-secondary" type="reset" onClick={onClick}>Cancel</button>
-                <button className="btn btn-primary" type="submit" onClick={handleSubmit}>Save Recipe</button>
+              <div className="row">
+                <div className="col-6 text-center">
+                  <button className="btn btn-secondary" type="reset" onClick={onClick}>Cancel</button>
+                </div>
+                <div className="col-6 text-center">
+                  <button className="btn btn-primary" type="submit" onClick={handleSubmit}>Save Recipe</button>
+                </div>
               </div>
             </form>
           </div>
