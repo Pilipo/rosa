@@ -7,6 +7,7 @@ import LoginView from '../Login';
 import NavBar from '../NavBar';
 import Appbar from '../Appbar';
 import Recipes from '../Recipes';
+import CreateRecipe from '../Recipe/CreateRecipe';
 import './index.scss';
 
 firebase.initializeApp(apiKeys);
@@ -66,9 +67,14 @@ const App = (props) => {
   return (
     <UserProvider value={user}>
       <NavBar onClick={requestLogout} context={UserContext} />
-      <Appbar onSearchClick={() => setShowSearch(!showSearch)} />
+      <Appbar
+        onSearchClick={() => setShowSearch(!showSearch)}
+        onAddRecipeClick={() => setRecipeIn(true)}
+      />
       <div className="content-holder">
-        <Recipes context={UserContext} showSearch={showSearch} />
+        {recipeIn
+          ? <CreateRecipe onClick={() => setRecipeIn(false)} />
+          : <Recipes context={UserContext} showSearch={showSearch} />}
       </div>
     </UserProvider>
   );

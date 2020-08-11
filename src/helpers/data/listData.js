@@ -10,7 +10,6 @@ const getList = (userId) => new Promise((resolve, reject) => {
 });
 
 const setList = (userId, itemArray) => new Promise((resolve, reject) => {
-  console.log('setList', userId);
   const obj = {
     recipes: itemArray,
   };
