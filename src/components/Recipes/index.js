@@ -3,7 +3,7 @@ import recipeHelper from '../../helpers/data/recipeData';
 import listHelper from '../../helpers/data/listData';
 import './index.scss';
 
-const Recipes = ({ context }) => {
+const Recipes = ({ context, showSearch }) => {
   const user = useContext(context);
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipes, setSelectedRecipes] = useState([]);
@@ -36,20 +36,28 @@ const Recipes = ({ context }) => {
   const isRecipeSelected = (recipeName) => (selectedRecipes.filter((rec) => rec.name === recipeName).length > 0);
 
   const noRecipeContent = () => (
-    <div className="card">
+    <div className="card text-center mt-4 p-3">
       <div>No recipes found</div>
       <small className="ml-2">Why don't you {searchPhrase ? 'clear your search?' : 'create a new one?'}</small>
     </div>
   );
 
+  const searchForm = () => (
+    <form className="form-inline d-flex justify-content-center md-form form-sm active-purple active-purple-2 mt-2">
+      <input className="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search Recipes"
+        aria-label="Search" onChange={handleChange} value={searchPhrase} autoFocus />
+      {searchPhrase.length
+        ? <button onClick={(e) => { setSearchPhrase(''); e.preventDefault(); }} className="btn"><i className="ml-3 fas fa-times-circle" aria-hidden="true"></i></button>
+        : <button onClick={(e) => { setSearchPhrase(''); e.preventDefault(); }} className="btn"><i className="ml-3 fas fa-search" aria-hidden="true"></i></button>
+      }
+    </form>
+  );
+
   if (recipes.length) {
     return (
-      <div>
-        <form className="form-inline d-flex justify-content-center md-form form-sm active-purple active-purple-2 mt-2">
-          <input className="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search Recipes"
-            aria-label="Search" onChange={handleChange} value={searchPhrase} autoFocus />
-          <i onClick={() => setSearchPhrase('')} onMouseDown={(e) => { e.preventDefault(); }} className="ml-3 fas fa-search" aria-hidden="true"></i>
-        </form>
+      <div className="animated slideInUp">
+        {showSearch && searchForm()}
+
         {recipes.map((recipe) => (
           <div className="card m-1" key={recipe.id} >
             <div className="row no-gutters">
@@ -78,7 +86,12 @@ const Recipes = ({ context }) => {
     );
   }
 
-  return noRecipeContent();
+  return (
+    <>
+    {showSearch && searchForm()}
+    {noRecipeContent()}
+    </>
+  );
 };
 
 export default Recipes;

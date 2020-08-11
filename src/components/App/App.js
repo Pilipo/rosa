@@ -66,9 +66,9 @@ const App = (props) => {
   return (
     <UserProvider value={user}>
       <NavBar onClick={requestLogout} context={UserContext} />
-      <Appbar />
+      <Appbar onSearchClick={() => setShowSearch(!showSearch)} />
       <div className="content-holder">
-        <Recipes context={UserContext} />
+        <Recipes context={UserContext} showSearch={showSearch} />
       </div>
     </UserProvider>
   );
