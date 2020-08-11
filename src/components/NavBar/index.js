@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Gravatar from 'react-gravatar';
 import './index.scss';
 
-const NavBar = ({ context }) => {
+const NavBar = ({ context, onClick }) => {
   const user = useContext(context);
   return (
   <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow navbar-fixed-top">
@@ -22,9 +22,7 @@ const NavBar = ({ context }) => {
           <Gravatar className="img-profile rounded-circle" alt="" email={user.email} />
         </a>
         <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-          <a href="/" className="dropdown-item" ><i className="fas fa-cog fa-sm fa-fw mr-2 text-gray-400"></i>Recipe Test</a>
-          <a href="/" className="dropdown-item" ><i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>Profile</a>
-          <a href="/" className="dropdown-item" ><i className="fas fa-cog fa-sm fa-fw mr-2 text-gray-400"></i>Admin</a>
+          <button onClick={onClick} className="dropdown-item" ><i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Logout</button>
         </div>
       </li>
   </ul>

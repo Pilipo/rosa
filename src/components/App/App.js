@@ -68,8 +68,8 @@ const App = (props) => {
   return (
     <UserProvider value={user}>
       {/* make this a nav bar (top and bottom) */}
-      <NavBar context={UserContext} />
-      <LogoutView onClick={requestLogout} context={UserContext} />
+      <NavBar onClick={requestLogout} context={UserContext} />
+      {/* <LogoutView context={UserContext} /> */}
     </UserProvider>
   );
 
