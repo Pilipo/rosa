@@ -42,7 +42,8 @@ const logout = () => {
 const App = (props) => {
   const [user, setUser] = useState({ loggedIn: false });
   const [recipeIn, setRecipeIn] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false);
+  const [showSearchButton, setShowSearchButton] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChange(setUser);
@@ -67,51 +68,17 @@ const App = (props) => {
     <UserProvider value={user}>
       <NavBar onClick={requestLogout} context={UserContext} />
       <Appbar
-        onSearchClick={() => setShowSearch(!showSearch)}
+        showSearchButton={showSearchButton}
+        onSearchClick={() => setShowSearchBar(!showSearchBar)}
         onAddRecipeClick={() => setRecipeIn(true)}
       />
       <div className="content-holder">
         {recipeIn
           ? <CreateRecipe onClick={() => setRecipeIn(false)} />
-          : <Recipes context={UserContext} showSearch={showSearch} />}
+          : <Recipes context={UserContext} showSearchBar={showSearchBar} />}
       </div>
     </UserProvider>
   );
-
-  // return (
-  //   <>
-  //   <nav hidden={recipeIn} position="fixed" color="default" >
-
-  //         <div>
-  //           <button
-  //             className="col-4"
-  //             color="inherit"
-  //             aria-label="open drawer"
-  //             onMouseDown={(e) => { e.preventDefault(); }}
-  //             onClick={() => setShowMenu(true)}
-  //           >
-  //             {/* <AuthUserContext.Consumer>
-  //               {(authUser) => (authUser
-  //                 ? <Gravatar height={32} width={32} className="img-profile rounded-circle" alt="" email={authUser.email} />
-  //                 : <i className="w-100 text-center fas fa-lg fa-user-circle"></i>
-  //               )}
-  //             </AuthUserContext.Consumer> */}
-  //           </button>
-  //           {/* <div className={classes.grow} /> */}
-  //           <div className="col-4">
-  //             <i className="w-100 text-center fas fa-2x text-primary fa-shopping-basket"></i>
-  //           </div>
-  //         </div>
-  //       </nav>
-
-  //       <div>
-  //         {/* <AuthUserContext.Consumer>
-  //           {(authUser) => <MakeShoppingList showSearch={showSearch} authUser={authUser} />}
-  //         </AuthUserContext.Consumer> */}
-  //       </div>
-
-  //       </>
-  // );
 };
 
 export default App;

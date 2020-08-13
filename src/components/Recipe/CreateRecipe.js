@@ -23,10 +23,10 @@ const groceryAisle = [
 const CreateRecipe = ({ onClick }) => {
   const [recipeData, setRecipeData] = useState({});
   const [fieldValues, setFieldValues] = useState({ ingredient: '', section: '', method: '' });
+  const [filteredAisles, setFilteredAisles] = useState(groceryAisle);
   const [section, setSection] = useState('');
   const formRef = useRef(null);
   const nameRef = useRef(null);
-  let ingredientRef = useRef(null);
 
   const handleEnter = (event) => {
     if (event.keyCode === 13) {
@@ -60,6 +60,8 @@ const CreateRecipe = ({ onClick }) => {
       event.preventDefault();
     }
   };
+
+  const findIndexOfGroceryAisle = (phrase) => setFilteredAisles(groceryAisle.filter((aisle) => aisle.indexOf(phrase) !== -1));
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -103,40 +105,48 @@ const CreateRecipe = ({ onClick }) => {
                   onChange={handleChange}
                 />
             </div>
-
               <hr />
               <div className="md-form input-group mb-3">
-                <button
-                  className="form-control btn btn-secondary dropdown-toggle w-40"
-                  type="button"
-                  name="section"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  onClick={handleChange}
-                >
-                  {section || 'Grocery Aisle'}
-                </button>
-                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  {groceryAisle.map((s, index) => (
-                    <button onClick={(e) => { e.preventDefault(); setSection(s); ingredientRef.focus(); }} className="btn dropdown-item" key={index} value={s}>{s}</button>
-                  ))}
-                </div>
                 <input
                   type="text"
                   name="ingredient"
-                  className="form-control w-60"
+                  className="form-control"
                   placeholder="Ingredient"
                   aria-label="Ingredient"
                   aria-describedby="material-addon1"
                   onKeyDown={handleChildEnter}
                   onChange={handleChange}
                   value={fieldValues.ingredient}
-                  ref={(input) => { ingredientRef = input; }}
+                />
+                <div className="input-group-append input-group-prepend">
+                  <span className="input-group-text">in</span>
+                </div>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  {filteredAisles.map((s, index) => (
+                    <button
+                      onClick={(e) => { e.preventDefault(); setSection(s); fieldValues.ingredient && handleChildEnter(); }}
+                      className="btn dropdown-item"
+                      key={index}
+                      value={s}
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+                <input
+                  className="form-control dropdown-toggle"
+                  data-toggle="dropdown"
+                  id="appendedInputButton"
+                  size="16"
+                  type="text"
+                  placeholder={section || 'Grocery Aisle'}
+                  value={section}
+                  onChange={(e) => { findIndexOfGroceryAisle(e.target.value); setSection(e.target.value); }}
+                  onFocus={(e) => e.target.click()}
                 />
               </div>
               <ul>
-              {recipeData.ingredient && recipeData.ingredient.map((ing, i) => <li key={i}>{ing}</li>)}
+                  {recipeData.ingredient && recipeData.ingredient.map((ing, i) => <li key={i}>{ing[0]}{ing[1] && ` in ${ing[1]} aisle.`}</li>)}
               </ul>
               <input
                   type="text"
