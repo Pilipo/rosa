@@ -1,8 +1,10 @@
-.modal-dialog {
-  position: absolute;
-  right: 100px;
-  bottom: 0;
-  left: 100px;
-  z-index: 10040;
-  overflow: auto;
+.w-40 {
+  width: 40% !important;
+}
+.w-60 {
+  width: 60% !important;
+}
+.dropdown-menu {
+  overflow-y: scroll;
+  height: 300px;
 }

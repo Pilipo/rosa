@@ -1,0 +1,14 @@
+.navbar-expand {
+  position: fixed !important;
+  width: 100%;
+  z-index: 2;
+  top: 0;
+}
+
+.rotate-n-15 {
+  transform: rotate(-15deg);
+  -ms-transform: rotate(-15deg);
+  -moz-transform: rotate(-15deg);
+  -webkit-transform: rotate(-15deg);
+  -o-transform: rotate(-15deg);
+}
